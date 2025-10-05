@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context docBase="D:/Fpoly_HCM/SOF203_LapTrinh-JAVA3/sof203-exercise-java3/src/main/webapp">
+  <Resources cacheMaxSize="10240">
+    <PreResources base="D:/Fpoly_HCM/SOF203_LapTrinh-JAVA3/sof203-exercise-java3/target/classes" className="org.apache.catalina.webresources.DirResourceSet" webAppMount="/WEB-INF/classes"/>
+  </Resources>
+</Context>
