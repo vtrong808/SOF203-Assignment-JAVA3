@@ -1,0 +1,188 @@
+/* --- Layout chính của trang chủ --- */
+.homepage-grid {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr; /* Cột trái rộng gấp 2.5 lần cột phải */
+    gap: 2rem;
+}
+
+/* --- Tin nổi bật --- */
+.featured-news-card {
+    background: var(--surface-color);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+.featured-news-card .news-card-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+.featured-news-card .news-card-content {
+    padding: 1.5rem;
+}
+.featured-news-card .news-card-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+.featured-news-card .news-card-title a {
+    color: var(--text-color);
+}
+.featured-news-card .news-card-excerpt {
+    font-size: 1rem;
+    color: var(--secondary-text-color);
+}
+
+/* --- Lưới tin mới khác --- */
+.latest-news-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.news-card-small {
+    background: var(--surface-color);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+.news-card-small .news-card-image img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+.news-card-small .news-card-content {
+    padding: 1rem;
+}
+.news-card-small .news-card-title {
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+.news-card-small .news-card-title a {
+    color: var(--text-color);
+}
+
+
+/* --- Sidebar --- */
+.sidebar-widget {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    position: sticky;
+    top: 100px; /* Vị trí dính lại khi cuộn, cách header một khoảng */
+}
+
+.widget-title {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.most-viewed-list {
+    list-style: none;
+}
+
+.most-viewed-list li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 1rem;
+}
+.most-viewed-list li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.most-viewed-list .rank {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-right: 1rem;
+    line-height: 1;
+}
+
+.most-viewed-list a {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* --- Responsive cho trang chủ --- */
+@media(max-width: 992px) {
+    .homepage-grid {
+        grid-template-columns: 1fr; /* Chuyển thành 1 cột */
+    }
+    .sidebar-widget {
+        position: static; /* Bỏ dính khi responsive */
+        margin-top: 2rem;
+    }
+}
+@media(max-width: 576px) {
+    .latest-news-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.news-card-small .news-card-excerpt-small {
+    font-size: 0.9rem;
+    color: var(--secondary-text-color);
+    margin-top: 0.5rem;
+}
+
+/* --- Khối chuyên mục --- */
+.category-section {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.section-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--primary-color);
+    display: inline-block; /* Để border chỉ dài bằng chữ */
+}
+.section-title a {
+    color: var(--text-color);
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* Cột tin chính rộng hơn cột tin phụ */
+    gap: 2rem;
+}
+
+.category-sub-news .sub-news-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px dashed var(--border-color);
+}
+.category-sub-news .sub-news-title:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+.category-sub-news .sub-news-title a {
+    color: var(--text-color);
+}
+
+.news-card-excerpt-small {
+    font-size: 0.9rem;
+    color: var(--secondary-text-color);
+    margin-top: 0.5rem;
+}
+
+
+/* --- Responsive cho khối chuyên mục --- */
+@media(max-width: 768px) {
+    .category-grid {
+        grid-template-columns: 1fr; /* Chuyển thành 1 cột trên mobile */
+    }
+}

@@ -1,13 +1,87 @@
-<%-- Import the header --%>
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="/layout/header.jsp"/>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
-<div class="main-content">
-    <h1>Chào mừng đến với ABC News!</h1>
-    <p>Đây là khu vực nội dung chính của trang chủ.</p>
-    <p>Các bản tin thuộc tính "Trang nhất" (Home=true) sẽ được hiển thị ở đây.</p>
-    <%-- TODO: Code to display news items will be added here --%>
+<jsp:include page="/layout/header.jsp"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/pages/home.css">
+
+<%-- Phần đầu trang với tin nổi bật và sidebar --%>
+<div class="homepage-grid">
+    <div class="main-news-column">
+        <%-- Tin nổi bật --%>
+        <c:if test="${not empty featuredNews}">
+            <div class="featured-news-card">
+                <a href="#" class="news-card-image"><img src="${pageContext.request.contextPath}/${featuredNews.image}" alt="${featuredNews.title}"></a>
+                <div class="news-card-content">
+                    <h2 class="news-card-title"><a href="#">${featuredNews.title}</a></h2>
+                    <p class="news-card-excerpt">${fn:substring(featuredNews.content, 0, 150)}...</p>
+                </div>
+            </div>
+        </c:if>
+    </div>
+    <aside class="sidebar-column">
+        <%-- Tin đọc nhiều --%>
+        <div class="sidebar-widget">
+            <h3 class="widget-title">Đọc nhiều nhất</h3>
+            <ul class="most-viewed-list">
+                <c:forEach var="news" items="${mostViewedNews}" varStatus="loop">
+                    <li><span class="rank">${loop.count}</span><a href="#">${news.title}</a></li>
+                </c:forEach>
+            </ul>
+        </div>
+    </aside>
 </div>
-<%-- Import the footer --%>
+
+<%-- ===== KHỐI CHUYÊN MỤC CÔNG NGHỆ ===== --%>
+<section class="category-section">
+    <h2 class="section-title"><a href="#">Công nghệ</a></h2>
+    <div class="category-grid">
+        <%-- Tin chính của mục --%>
+        <c:if test="${not empty techNews}">
+            <div class="category-main-news">
+                <div class="news-card-small">
+                    <a href="#" class="news-card-image"><img src="${pageContext.request.contextPath}/${techNews[0].image}" alt="${techNews[0].title}"></a>
+                    <div class="news-card-content">
+                        <h3 class="news-card-title"><a href="#">${techNews[0].title}</a></h3>
+                        <p class="news-card-excerpt-small">${fn:substring(techNews[0].content, 0, 100)}...</p>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+        <%-- Danh sách các tin phụ --%>
+        <div class="category-sub-news">
+            <c:forEach var="news" items="${techNews}" begin="1">
+                <h4 class="sub-news-title"><a href="#">${news.title}</a></h4>
+            </c:forEach>
+        </div>
+    </div>
+</section>
+
+<%-- ===== KHỐI CHUYÊN MỤC THỂ THAO ===== --%>
+<section class="category-section">
+    <h2 class="section-title"><a href="#">Thể thao</a></h2>
+    <div class="category-grid">
+         <%-- Tin chính của mục --%>
+        <c:if test="${not empty sportNews}">
+            <div class="category-main-news">
+                 <div class="news-card-small">
+                    <a href="#" class="news-card-image"><img src="${pageContext.request.contextPath}/${sportNews[0].image}" alt="${sportNews[0].title}"></a>
+                    <div class="news-card-content">
+                        <h3 class="news-card-title"><a href="#">${sportNews[0].title}</a></h3>
+                        <p class="news-card-excerpt-small">${fn:substring(sportNews[0].content, 0, 100)}...</p>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+        <%-- Danh sách các tin phụ --%>
+        <div class="category-sub-news">
+            <c:forEach var="news" items="${sportNews}" begin="1">
+                <h4 class="sub-news-title"><a href="#">${news.title}</a></h4>
+            </c:forEach>
+        </div>
+    </div>
+</section>
+
 <jsp:include page="/layout/footer.jsp"/>

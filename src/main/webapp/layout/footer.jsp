@@ -1,11 +1,45 @@
-</main> <%-- Closes the .container div from header --%>
+</main> <%-- Đóng thẻ main.container từ header --%>
+
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <%-- Cột 1: Giới thiệu --%>
+            <div class="footer-column">
+                <h4>ABC NEWS</h4>
+                <p>Trang tin tức tổng hợp, cập nhật nhanh chóng và chính xác nhất các sự kiện nóng hổi trong nước và quốc tế.</p>
+            </div>
 
-<footer class="public-footer">
-    <p>&copy; 2025 ABC News. All rights reserved.</p>
-    <p>FPT Polytechnic Assignment - SOF203</p>
+            <%-- Cột 2: Danh mục --%>
+            <div class="footer-column">
+                <h4>Danh mục</h4>
+                <ul>
+                    <li><a href="#">Văn hóa</a></li>
+                    <li><a href="#">Pháp luật</a></li>
+                    <li><a href="#">Thể thao</a></li>
+                    <li><a href="#">Công nghệ</a></li>
+                </ul>
+            </div>
+
+            <%-- Cột 3: Đăng ký nhận tin --%>
+            <div class="footer-column">
+                <h4>Đăng ký nhận tin</h4>
+                <p>Nhận các tin tức mới nhất mỗi ngày qua email của bạn.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Nhập email của bạn...">
+                    <button type="submit">Đăng ký</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 ABC News. All rights reserved. | FPT Polytechnic Assignment - SOF203</p>
+    </div>
 </footer>
+
+<%-- Đường dẫn đến file JavaScript (nếu có) --%>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 
 </body>
 </html>
