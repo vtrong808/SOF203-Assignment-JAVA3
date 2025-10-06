@@ -28,18 +28,31 @@
             <a href="${pageContext.request.contextPath}/home">ABC NEWS</a>
         </div>
         <nav class="main-nav">
-            <ul class="main-menu">
-                <li><a href="${pageContext.request.contextPath}/home" class="active">Trang chủ</a></li>
-                <li><a href="#">Văn hóa</a></li>
-                <li><a href="#">Pháp luật</a></li>
-                <li><a href="#">Thể thao</a></li>
-                <li><a href="#">Công nghệ</a></li>
-            </ul>
+            <%-- Nhóm tất cả các menu vào một div --%>
+            <div class="menu-container">
+                <ul class="main-menu">
+                    <li><a href="${pageContext.request.contextPath}/home" class="active">Trang chủ</a></li>
+                    <li><a href="#">Văn hóa</a></li>
+                    <li><a href="#">Pháp luật</a></li>
+                    <li><a href="#">Thể thao</a></li>
+                </ul>
 
+                <%-- Menu dành cho Admin --%>
+                <c:if test="${sessionScope.user != null && sessionScope.user.role == true}">
+                    <ul class="admin-menu">
+                        <li class="admin-menu-item"><a href="#">Quản lý Tin tức</a></li>
+                        <li class="admin-menu-item"><a href="#">Quản lý Loại tin</a></li>
+                        <li class="admin-menu-item"><a href="#">Quản lý Người dùng</a></li>
+                        <li class="admin-menu-item"><a href="#">Quản lý Newsletter</a></li>
+                    </ul>
+                </c:if>
+            </div>
+
+            <%-- Các hành động ở cuối header --%>
             <div class="header-actions">
                 <c:choose>
                     <c:when test="${sessionScope.user != null}">
-                        <span class="welcome-user">Chào ༼ つ ◕_◕ ༽つ ${sessionScope.user.fullname}</span>
+                        <span class="welcome-user">Chào, ${sessionScope.user.fullname}</span>
                         <a href="${pageContext.request.contextPath}/logout" class="auth-link">Đăng xuất</a>
                     </c:when>
                     <c:otherwise>

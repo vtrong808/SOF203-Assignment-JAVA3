@@ -71,12 +71,26 @@ img {
     font-weight: 700;
 }
 
-.main-menu ul li a {
+/* --- Style cho các link trong menu --- */
+.main-menu li a, .admin-menu li a {
     color: var(--secondary-text-color);
     font-weight: 500;
-    padding-bottom: 5px;
-    border-bottom: 2px solid transparent;
+    padding: 10px 0; /* Tăng khoảng đệm để gạch chân không quá sát */
+    border-bottom: 2px solid transparent; /* Gạch chân ẩn mặc định */
     transition: all 0.3s ease;
+}
+
+/* Khi di chuột vào hoặc khi link đang active */
+.main-menu li a:hover,
+.admin-menu li a:hover,
+.main-menu li a.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color); /* Hiện gạch chân với màu hồng */
+}
+
+/* Style riêng cho menu admin để giữ màu hồng đặc trưng */
+.admin-menu-item a {
+    color: var(--primary-color) !important;
 }
 
 .main-menu ul li a:hover, .main-menu ul li a.active {
@@ -124,7 +138,8 @@ main.container {
 .main-nav {
     display: flex;
     align-items: center;
-    gap: 2rem; /* Khoảng cách giữa menu và form tìm kiếm */
+    justify-content: space-between; /* Đẩy các nhóm phần tử ra 2 bên */
+    width: 100%; /* Đảm bảo nav chiếm hết chiều rộng */
 }
 
 .main-menu {
@@ -266,4 +281,25 @@ main.container {
 .auth-link:hover {
     background-color: #ff9eb2;
     color: #000;
+}
+
+/* --- Style cho Menu của Admin --- */
+.admin-menu {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    margin-left: 30px; /* Tạo khoảng cách với menu chính */
+    padding-left: 30px; /* Thêm đường kẻ phân cách */
+    border-left: 1px solid var(--border-color);
+}
+
+/* Bỏ icon bánh răng vì đã có màu để phân biệt */
+.admin-menu-item a::before {
+    content: "";
+    margin-right: 0;
+}
+
+.menu-container {
+    display: flex;
+    align-items: center;
 }
