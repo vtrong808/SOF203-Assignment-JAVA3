@@ -1,6 +1,7 @@
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -8,51 +9,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABC News - ${param.title != null ? param.title : 'Trang tin tức hàng đầu'}</title>
-
-    <%-- Google Fonts --%>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
-    <%-- Font Awesome Icons (cho icon tìm kiếm) --%>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
-    <%-- Đường dẫn đến file CSS --%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 </head>
 <body>
 
 <header class="public-header">
-    <div class="container">
+    <div class="container-fluid">
         <div class="logo">
             <a href="${pageContext.request.contextPath}/home">ABC NEWS</a>
         </div>
         <nav class="main-nav">
-            <%-- Nhóm tất cả các menu vào một div --%>
             <div class="menu-container">
                 <ul class="main-menu">
                     <li><a href="${pageContext.request.contextPath}/home" class="active">Trang chủ</a></li>
-                    <li><a href="#">Văn hóa</a></li>
-                    <li><a href="#">Pháp luật</a></li>
-                    <li><a href="#">Thể thao</a></li>
+                    <li><a href="${pageContext.request.contextPath}/category?id=TG">Thế giới</a></li>
+                    <li><a href="${pageContext.request.contextPath}/category?id=CN">Công nghệ</a></li>
+                    <li><a href="${pageContext.request.contextPath}/category?id=TT">Thể thao</a></li>
+                    <li><a href="${pageContext.request.contextPath}/category?id=GT">Giải trí</a></li>
                 </ul>
-
-                <%-- Menu dành cho Admin --%>
                 <c:if test="${sessionScope.user != null && sessionScope.user.role == true}">
                     <ul class="admin-menu">
-                        <li class="admin-menu-item"><a href="#">Quản lý Tin tức</a></li>
-                        <li class="admin-menu-item"><a href="#">Quản lý Loại tin</a></li>
-                        <li class="admin-menu-item"><a href="#">Quản lý Người dùng</a></li>
-                        <li class="admin-menu-item"><a href="#">Quản lý Newsletter</a></li>
+                         <li class="admin-menu-item"><a href="#">Quản lý Tin tức</a></li>
+                         <li class="admin-menu-item"><a href="#">Quản lý Loại tin</a></li>
+                         <li class="admin-menu-item"><a href="#">Quản lý Người dùng</a></li>
                     </ul>
                 </c:if>
             </div>
-
-            <%-- Các hành động ở cuối header --%>
             <div class="header-actions">
-                <c:choose>
+                 <c:choose>
                     <c:when test="${sessionScope.user != null}">
-                        <span class="welcome-user">Chào, ${sessionScope.user.fullname}</span>
+                        <span class="welcome-user">${sessionScope.user.fullname}</span>
                         <a href="${pageContext.request.contextPath}/logout" class="auth-link">Đăng xuất</a>
                     </c:when>
                     <c:otherwise>
@@ -67,5 +57,3 @@
         </nav>
     </div>
 </header>
-
-<main class="container">

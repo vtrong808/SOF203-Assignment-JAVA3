@@ -5,34 +5,33 @@
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <jsp:include page="/layout/header.jsp"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/pages/home.css">
 
-<%-- Phần đầu trang với tin nổi bật và sidebar --%>
-<div class="homepage-grid">
-    <div class="main-news-column">
-        <%-- Tin nổi bật --%>
-        <c:if test="${not empty featuredNews}">
-            <div class="featured-news-card">
-                <a href="#" class="news-card-image"><img src="${pageContext.request.contextPath}/${featuredNews.image}" alt="${featuredNews.title}"></a>
-                <div class="news-card-content">
-                    <h2 class="news-card-title"><a href="#">${featuredNews.title}</a></h2>
-                    <p class="news-card-excerpt">${fn:substring(featuredNews.content, 0, 150)}...</p>
+<main class="container">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pages/home.css">
+
+    <div class="homepage-grid">
+        <div class="main-news-column">
+            <c:if test="${not empty featuredNews}">
+                <div class="featured-news-card">
+                    <a href="#" class="news-card-image"><img src="${pageContext.request.contextPath}/${featuredNews.image}" alt="${featuredNews.title}"></a>
+                    <div class="news-card-content">
+                        <h2 class="news-card-title"><a href="#">${featuredNews.title}</a></h2>
+                        <p class="news-card-excerpt">${fn:substring(featuredNews.content, 0, 150)}...</p>
+                    </div>
                 </div>
-            </div>
-        </c:if>
-    </div>
-    <aside class="sidebar-column">
-        <%-- Tin đọc nhiều --%>
-        <div class="sidebar-widget">
-            <h3 class="widget-title">Đọc nhiều nhất</h3>
-            <ul class="most-viewed-list">
-                <c:forEach var="news" items="${mostViewedNews}" varStatus="loop">
-                    <li><span class="rank">${loop.count}</span><a href="#">${news.title}</a></li>
-                </c:forEach>
-            </ul>
+            </c:if>
         </div>
-    </aside>
-</div>
+        <aside class="sidebar-column">
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Đọc nhiều nhất</h3>
+                <ul class="most-viewed-list">
+                    <c:forEach var="news" items="${mostViewedNews}" varStatus="loop">
+                        <li><span class="rank">${loop.count}</span><a href="#">${news.title}</a></li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </aside>
+    </div>
 
 <%-- ===== KHỐI CHUYÊN MỤC CÔNG NGHỆ ===== --%>
 <section class="category-section">

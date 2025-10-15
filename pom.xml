@@ -29,6 +29,12 @@
         </dependency>
 
         <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <version>9.4.1.jre8</version>
@@ -47,13 +53,7 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>jakarta.servlet.jsp.jstl</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-            <version>3.0.0</version>
-        </dependency>
     </dependencies>
-
     <build>
         <finalName>sof203-assignment-java3</finalName>
         <plugins>

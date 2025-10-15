@@ -1,4 +1,19 @@
-/* --- Biến màu và Font (Theme Dark Mode + Hồng Pastel) --- */
+/*
+==============================================
+  BẢN CSS TỐI ƯU HÓA CHO DỰ ÁN ABC NEWS
+==============================================
+  Mục lục:
+  0. Biến và Cài đặt chung
+  1. Layout (Body, Container)
+  2. Header
+  3. Navigation & Menus
+  4. Forms (Search, Newsletter)
+  5. Footer
+  6. Responsive
+==============================================
+*/
+
+/* == 0. Biến và Cài đặt chung == */
 :root {
     --primary-color: #FFB6C1; /* Hồng Pastel */
     --background-color: #121212; /* Nền đen tuyền */
@@ -10,32 +25,14 @@
     --font-family: 'Roboto', sans-serif;
 }
 
-/* --- Reset & Cài đặt chung --- */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* --- Cấu trúc Sticky Footer bằng Flexbox --- */
-body {
-    font-family: var(--font-family);
-    background-color: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.6;
-
-    /* Sticky Footer */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-/* --- Container CĂN GIỮA --- */
-.container {
-    width: 90%; /* Chiếm 90% chiều rộng màn hình */
-    max-width: 1400px; /* Nhưng không rộng quá 1400px trên màn hình lớn */
-    margin: 0 auto; /* Đây là dòng quan trọng để căn giữa */
-    padding: 0; /* Bỏ padding cũ đi */
+img {
+    max-width: 100%;
 }
 
 a {
@@ -44,22 +41,41 @@ a {
     transition: color 0.3s ease;
 }
 
-a:hover {
-    color: var(--white-color);
+/* == 1. Layout (Body, Container) == */
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-img {
-    max-width: 100%;
+
+.container-fluid {
+    width: 100%;
+    padding: 0 4rem;
 }
 
-/* --- Header & Menu --- */
+.container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+main.container, main.container-fluid {
+    flex-grow: 1;
+}
+
+/* == 2. Header == */
 .public-header {
     background-color: var(--surface-color);
     padding: 1rem 0;
     border-bottom: 1px solid var(--border-color);
 }
 
-.public-header .container {
+.public-header .container, .public-header .container-fluid {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -71,114 +87,128 @@ img {
     font-weight: 700;
 }
 
-/* --- Style cho các link trong menu --- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.welcome-user {
+    font-weight: 500;
+}
+
+.auth-link {
+    background-color: var(--primary-color);
+    color: #000;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.auth-link:hover {
+    background-color: #ff9eb2;
+    color: #000;
+}
+
+/* == 3. Navigation & Menus == */
+.main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.menu-container {
+    display: flex;
+    align-items: center;
+}
+
+.main-menu, .admin-menu {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.admin-menu {
+    margin-left: 30px;
+    padding-left: 30px;
+    border-left: 1px solid var(--border-color);
+}
+
 .main-menu li a, .admin-menu li a {
     color: var(--secondary-text-color);
     font-weight: 500;
-    padding: 10px 0; /* Tăng khoảng đệm để gạch chân không quá sát */
-    border-bottom: 2px solid transparent; /* Gạch chân ẩn mặc định */
+    padding: 10px 0;
+    border-bottom: 2px solid transparent;
     transition: all 0.3s ease;
 }
 
-/* Khi di chuột vào hoặc khi link đang active */
 .main-menu li a:hover,
 .admin-menu li a:hover,
 .main-menu li a.active {
     color: var(--primary-color);
-    border-bottom-color: var(--primary-color); /* Hiện gạch chân với màu hồng */
+    border-bottom-color: var(--primary-color);
 }
 
-/* Style riêng cho menu admin để giữ màu hồng đặc trưng */
 .admin-menu-item a {
     color: var(--primary-color) !important;
 }
 
-.main-menu ul li a:hover, .main-menu ul li a.active {
-    color: var(--primary-color);
-    border-bottom-color: var(--primary-color);
-}
-
-
-/* --- Nội dung chính --- */
-/* Đảm bảo nội dung chính co giãn để đẩy footer xuống */
-main.container {
-    flex-grow: 1;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-}
-
-.main-content {
-    background: var(--surface-color);
-    padding: 2rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-/* --- Footer --- */
-.public-footer {
-    background-color: var(--surface-color);
-    color: var(--secondary-text-color);
-    text-align: center;
-    padding: 2rem 0;
-    border-top: 1px solid var(--border-color);
-}
-
-/* --- Responsive --- */
-@media(max-width: 768px) {
-    .container {
-        padding: 0 1rem;
-    }
-    .public-header .container {
-        flex-direction: column;
-        gap: 1rem;
-    }
-}
-
-/* --- Nâng cấp Header & Menu --- */
-.main-nav {
+/* == 4. Forms (Search, Newsletter) == */
+.search-form, .newsletter-form {
     display: flex;
-    align-items: center;
-    justify-content: space-between; /* Đẩy các nhóm phần tử ra 2 bên */
-    width: 100%; /* Đảm bảo nav chiếm hết chiều rộng */
 }
 
-.main-menu {
-    display: flex; /* Đảm bảo menu luôn nằm ngang */
-    list-style: none;
-    gap: 25px; /* Khoảng cách giữa các mục menu */
-}
-
-/* --- Form tìm kiếm --- */
 .search-form {
-    display: flex;
     border: 1px solid var(--border-color);
     border-radius: 20px;
     overflow: hidden;
 }
 
-.search-form input {
+.search-form input, .newsletter-form input {
     border: none;
     background: transparent;
     color: var(--text-color);
-    padding: 8px 15px;
     outline: none;
     font-size: 0.9rem;
 }
 
-.search-form button {
+.search-form input {
+    padding: 8px 15px;
+}
+
+.newsletter-form input {
+    flex-grow: 1;
+    border: 1px solid var(--border-color);
+    background: var(--background-color);
+    padding: 10px;
+    border-radius: 5px 0 0 5px;
+}
+
+.search-form button, .newsletter-form button {
     background-color: var(--primary-color);
     border: none;
     color: var(--background-color);
-    padding: 8px 12px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.search-form button:hover {
-    background-color: #ff9eb2; /* Màu hồng nhạt hơn khi hover */
+.search-form button {
+    padding: 8px 12px;
 }
 
-/* --- Nâng cấp Footer --- */
+.search-form button:hover {
+    background-color: #ff9eb2;
+}
+
+.newsletter-form button {
+    padding: 10px 15px;
+    border-radius: 0 5px 5px 0;
+    font-weight: bold;
+}
+
+/* == 5. Footer == */
 .site-footer {
     background-color: var(--surface-color);
     color: var(--secondary-text-color);
@@ -188,7 +218,7 @@ main.container {
 
 .footer-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Chia thành 3 cột đều nhau */
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     padding-bottom: 2rem;
 }
@@ -220,33 +250,6 @@ main.container {
     transform: translateX(5px);
 }
 
-/* Form nhận tin */
-.newsletter-form {
-    margin-top: 1rem;
-    display: flex;
-}
-
-.newsletter-form input {
-    flex-grow: 1;
-    border: 1px solid var(--border-color);
-    background: var(--background-color);
-    color: var(--text-color);
-    padding: 10px;
-    border-radius: 5px 0 0 5px;
-    outline: none;
-}
-
-.newsletter-form button {
-    border: none;
-    background: var(--primary-color);
-    color: var(--background-color);
-    padding: 10px 15px;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-/* Thanh copyright dưới cùng */
 .footer-bottom {
     border-top: 1px solid var(--border-color);
     text-align: center;
@@ -254,52 +257,14 @@ main.container {
     font-size: 0.8rem;
 }
 
-/* Responsive cho Footer */
+/* == 6. Responsive == */
 @media(max-width: 768px) {
-    .footer-grid {
-        grid-template-columns: 1fr; /* Chuyển thành 1 cột trên mobile */
+    .public-header .container, .public-header .container-fluid {
+        flex-direction: column;
+        gap: 1rem;
     }
-}
 
-/* Thêm vào cuối file main.css */
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-.welcome-user {
-    font-weight: 500;
-}
-.auth-link {
-    background-color: var(--primary-color);
-    color: #000;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-.auth-link:hover {
-    background-color: #ff9eb2;
-    color: #000;
-}
-
-/* --- Style cho Menu của Admin --- */
-.admin-menu {
-    display: flex;
-    list-style: none;
-    gap: 25px;
-    margin-left: 30px; /* Tạo khoảng cách với menu chính */
-    padding-left: 30px; /* Thêm đường kẻ phân cách */
-    border-left: 1px solid var(--border-color);
-}
-
-/* Bỏ icon bánh răng vì đã có màu để phân biệt */
-.admin-menu-item a::before {
-    content: "";
-    margin-right: 0;
-}
-
-.menu-container {
-    display: flex;
-    align-items: center;
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
 }
