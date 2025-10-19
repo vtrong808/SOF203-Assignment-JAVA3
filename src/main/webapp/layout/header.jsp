@@ -31,7 +31,7 @@
                     <li><a href="${pageContext.request.contextPath}/category?id=TT" class="${param.activePage == 'TT' ? 'active' : ''}">Thể thao</a></li>
                     <li><a href="${pageContext.request.contextPath}/category?id=GT" class="${param.activePage == 'GT' ? 'active' : ''}">Giải trí</a></li>
                 </ul>
-                <c:if test="${sessionScope.user != null && sessionScope.user.role == true}">
+                <c:if test="${sessionScope.user.role == 2}">
                     <ul class="admin-menu">
                          <li class="admin-menu-item"><a href="#">Quản lý Tin tức</a></li>
                          <li class="admin-menu-item"><a href="#">Quản lý Loại tin</a></li>

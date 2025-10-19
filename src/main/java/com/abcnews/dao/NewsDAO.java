@@ -16,6 +16,20 @@ public class NewsDAO {
      * Lấy tất cả các bản tin từ cơ sở dữ liệu.
      * @return Danh sách các đối tượng News.
      */
+    private News mapResultSetToNews(ResultSet rs) throws SQLException {
+        News news = new News();
+        news.setId(rs.getString("Id"));
+        news.setTitle(rs.getString("Title"));
+        news.setContent(rs.getString("Content"));
+        news.setImage(rs.getString("Image"));
+        news.setPostedDate(rs.getTimestamp("PostedDate"));
+        news.setAuthor(rs.getString("Author"));
+        news.setViewCount(rs.getInt("ViewCount"));
+        news.setCategoryId(rs.getString("CategoryId"));
+        news.setHome(rs.getBoolean("Home"));
+        return news;
+    }
+
     public List<News> getAllNews() {
         List<News> newsList = new ArrayList<>();
         String sql = "SELECT * FROM NEWS";
@@ -26,17 +40,7 @@ public class NewsDAO {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                News news = new News();
-                news.setId(rs.getString("Id"));
-                news.setTitle(rs.getString("Title"));
-                news.setContent(rs.getString("Content"));
-                news.setImage(rs.getString("Image"));
-                news.setPostedDate(rs.getTimestamp("PostedDate"));
-                news.setAuthor(rs.getString("Author"));
-                news.setViewCount(rs.getInt("ViewCount"));
-                news.setCategoryId(rs.getString("CategoryId"));
-                news.setHome(rs.getBoolean("Home"));
-                newsList.add(news);
+                newsList.add(mapResultSetToNews(rs));
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace(); // In lỗi ra console để debug
@@ -55,17 +59,7 @@ public class NewsDAO {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                News news = new News();
-                news.setId(rs.getString("Id"));
-                news.setTitle(rs.getString("Title"));
-                news.setContent(rs.getString("Content"));
-                news.setImage(rs.getString("Image"));
-                news.setPostedDate(rs.getTimestamp("PostedDate"));
-                news.setAuthor(rs.getString("Author"));
-                news.setViewCount(rs.getInt("ViewCount"));
-                news.setCategoryId(rs.getString("CategoryId"));
-                news.setHome(rs.getBoolean("Home"));
-                newsList.add(news);
+                newsList.add(mapResultSetToNews(rs));
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -85,18 +79,7 @@ public class NewsDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                News news = new News();
-                // ... (copy code map ResultSet to News object từ các hàm khác)
-                news.setId(rs.getString("Id"));
-                news.setTitle(rs.getString("Title"));
-                news.setContent(rs.getString("Content"));
-                news.setImage(rs.getString("Image"));
-                news.setPostedDate(rs.getTimestamp("PostedDate"));
-                news.setAuthor(rs.getString("Author"));
-                news.setViewCount(rs.getInt("ViewCount"));
-                news.setCategoryId(rs.getString("CategoryId"));
-                news.setHome(rs.getBoolean("Home"));
-                newsList.add(news);
+                newsList.add(mapResultSetToNews(rs));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,18 +99,7 @@ public class NewsDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                News news = new News();
-                // ... (copy code map ResultSet to News object)
-                news.setId(rs.getString("Id"));
-                news.setTitle(rs.getString("Title"));
-                news.setContent(rs.getString("Content"));
-                news.setImage(rs.getString("Image"));
-                news.setPostedDate(rs.getTimestamp("PostedDate"));
-                news.setAuthor(rs.getString("Author"));
-                news.setViewCount(rs.getInt("ViewCount"));
-                news.setCategoryId(rs.getString("CategoryId"));
-                news.setHome(rs.getBoolean("Home"));
-                newsList.add(news);
+                newsList.add(mapResultSetToNews(rs));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -148,18 +120,7 @@ public class NewsDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                News news = new News();
-                // ... (copy code map ResultSet to News object)
-                news.setId(rs.getString("Id"));
-                news.setTitle(rs.getString("Title"));
-                news.setContent(rs.getString("Content"));
-                news.setImage(rs.getString("Image"));
-                news.setPostedDate(rs.getTimestamp("PostedDate"));
-                news.setAuthor(rs.getString("Author"));
-                news.setViewCount(rs.getInt("ViewCount"));
-                news.setCategoryId(rs.getString("CategoryId"));
-                news.setHome(rs.getBoolean("Home"));
-                newsList.add(news);
+                newsList.add(mapResultSetToNews(rs));
             }
         } catch (Exception e) {
             e.printStackTrace();
