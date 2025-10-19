@@ -4,7 +4,9 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
-<jsp:include page="/layout/header.jsp"/>
+<jsp:include page="/layout/header.jsp">
+    <jsp:param name="activePage" value="home"/>
+</jsp:include>
 
 <main class="container">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pages/home.css">

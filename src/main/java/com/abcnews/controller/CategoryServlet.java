@@ -1,6 +1,8 @@
 package com.abcnews.controller;
 
+import com.abcnews.dao.CategoriesDAO;
 import com.abcnews.dao.NewsDAO;
+import com.abcnews.model.Categories;
 import com.abcnews.model.News;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,19 +17,17 @@ import java.util.List;
 public class CategoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lấy mã danh mục từ URL (ví dụ: ?id=CN)
         String categoryId = req.getParameter("id");
 
         NewsDAO newsDAO = new NewsDAO();
-        // Lấy tất cả tin tức thuộc danh mục này (giả sử lấy tối đa 20 tin)
+        CategoriesDAO categoriesDAO = new CategoriesDAO();
+
         List<News> newsList = newsDAO.getNewsByCategoryId(categoryId, 20);
+        Categories category = categoriesDAO.findById(categoryId);
 
-        // Gửi danh sách tin tức qua cho JSP
         req.setAttribute("newsList", newsList);
-        // Gửi cả mã danh mục để biết đang ở trang nào
-        req.setAttribute("categoryId", categoryId);
+        req.setAttribute("category", category); // Gửi cả đối tượng category đi
 
-        // Sử dụng RequestDispatcher để chuyển tiếp đến category.jsp
         req.getRequestDispatcher("/category.jsp").forward(req, resp);
     }
 }

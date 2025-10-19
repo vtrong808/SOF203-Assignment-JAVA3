@@ -21,8 +21,8 @@
             <div class="footer-column">
                 <h4>Đăng ký nhận tin</h4>
                 <p>Nhận các tin tức mới nhất mỗi ngày qua email của bạn.</p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Nhập email của bạn...">
+                <form class="newsletter-form" action="${pageContext.request.contextPath}/subscribe" method="post">
+                    <input type="email" name="email" placeholder="Nhập email của bạn..." required>
                     <button type="submit">Đăng ký</button>
                 </form>
             </div>
