@@ -16,15 +16,17 @@
     <div class="category-news-list">
         <c:forEach var="news" items="${newsList}">
             <div class="news-item-row">
-                <a href="#" class="news-item-image">
+                <%-- UPDATE THIS LINE --%>
+                <a href="${pageContext.request.contextPath}/news-detail?id=${news.id}" class="news-item-image">
                     <img src="${pageContext.request.contextPath}/${news.image}" alt="${news.title}">
                 </a>
                 <div class="news-item-content">
-                    <h3 class="news-item-title"><a href="#">${news.title}</a></h3>
+                    <%-- AND UPDATE THIS LINE --%>
+                    <h3 class="news-item-title"><a href="${pageContext.request.contextPath}/news-detail?id=${news.id}">${news.title}</a></h3>
                     <p class="news-item-excerpt">${fn:substring(news.content, 0, 200)}...</p>
                     <div class="news-card-meta">
-                        <span><i class="fa fa-user"></i> ${news.author}</span>
-                        <span><i class="fa fa-calendar-alt"></i> <fmt:formatDate value="${news.postedDate}" pattern="dd-MM-yyyy"/></span>
+                         <span><i class="fa fa-user"></i> ${news.author}</span>
+                         <span><i class="fa fa-calendar-alt"></i> <fmt:formatDate value="${news.postedDate}" pattern="dd-MM-yyyy"/></span>
                     </div>
                 </div>
             </div>

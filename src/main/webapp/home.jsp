@@ -15,9 +15,9 @@
         <div class="main-news-column">
             <c:if test="${not empty featuredNews}">
                 <div class="featured-news-card">
-                    <a href="#" class="news-card-image"><img src="${pageContext.request.contextPath}/${featuredNews.image}" alt="${featuredNews.title}"></a>
+                    <a href="${pageContext.request.contextPath}/news-detail?id=${featuredNews.id}" class="news-card-image"><img src="${pageContext.request.contextPath}/${featuredNews.image}" alt="${featuredNews.title}"></a>
                     <div class="news-card-content">
-                        <h2 class="news-card-title"><a href="${pageContext.request.contextPath}/news-detail?id=${news.id}"></a></h2>
+                        <h2 class="news-card-title"><a href="${pageContext.request.contextPath}/news-detail?id=${featuredNews.id}">${featuredNews.title}</a></h2>
                         <p class="news-card-excerpt">${fn:substring(featuredNews.content, 0, 150)}...</p>
                     </div>
                 </div>
@@ -37,24 +37,22 @@
 
 <%-- ===== KHỐI CHUYÊN MỤC CÔNG NGHỆ ===== --%>
 <section class="category-section">
-    <h2 class="section-title"><a href="#">Công nghệ</a></h2>
+    <h2 class="section-title"><a href="${pageContext.request.contextPath}/category?id=CN">Công nghệ</a></h2>
     <div class="category-grid">
-        <%-- Tin chính của mục --%>
         <c:if test="${not empty techNews}">
             <div class="category-main-news">
                 <div class="news-card-small">
-                    <a href="#" class="news-card-image"><img src="${pageContext.request.contextPath}/${techNews[0].image}" alt="${techNews[0].title}"></a>
+                    <a href="${pageContext.request.contextPath}/news-detail?id=${techNews[0].id}" class="news-card-image"><img src="${pageContext.request.contextPath}/${techNews[0].image}" alt="${techNews[0].title}"></a>
                     <div class="news-card-content">
-                        <h3 class="news-card-title"><a href="${pageContext.request.contextPath}/news-detail?id=${news.id}"></a></h3>
+                        <h3 class="news-card-title"><a href="${pageContext.request.contextPath}/news-detail?id=${techNews[0].id}">${techNews[0].title}</a></h3>
                         <p class="news-card-excerpt-small">${fn:substring(techNews[0].content, 0, 100)}...</p>
                     </div>
                 </div>
             </div>
         </c:if>
-        <%-- Danh sách các tin phụ --%>
         <div class="category-sub-news">
             <c:forEach var="news" items="${techNews}" begin="1">
-                <h4 class="sub-news-title"><a href="#">${news.title}</a></h4>
+                <h4 class="sub-news-title"><a href="${pageContext.request.contextPath}/news-detail?id=${news.id}">${news.title}</a></h4>
             </c:forEach>
         </div>
     </div>
@@ -62,24 +60,22 @@
 
 <%-- ===== KHỐI CHUYÊN MỤC THỂ THAO ===== --%>
 <section class="category-section">
-    <h2 class="section-title"><a href="#">Thể thao</a></h2>
+    <h2 class="section-title"><a href="${pageContext.request.contextPath}/category?id=CN">Thể thao</a></h2>
     <div class="category-grid">
-         <%-- Tin chính của mục --%>
-        <c:if test="${not empty sportNews}">
+        <c:if test="${not empty techNews}">
             <div class="category-main-news">
-                 <div class="news-card-small">
-                    <a href="#" class="news-card-image"><img src="${pageContext.request.contextPath}/${sportNews[0].image}" alt="${sportNews[0].title}"></a>
+                <div class="news-card-small">
+                    <a href="${pageContext.request.contextPath}/news-detail?id=${techNews[0].id}" class="news-card-image"><img src="${pageContext.request.contextPath}/${techNews[0].image}" alt="${techNews[0].title}"></a>
                     <div class="news-card-content">
-                        <h3 class="news-card-title"><a href="${pageContext.request.contextPath}/news-detail?id=${news.id}"></a></h3>
-                        <p class="news-card-excerpt-small">${fn:substring(sportNews[0].content, 0, 100)}...</p>
+                        <h3 class="news-card-title"><a href="${pageContext.request.contextPath}/news-detail?id=${techNews[0].id}">${techNews[0].title}</a></h3>
+                        <p class="news-card-excerpt-small">${fn:substring(techNews[0].content, 0, 100)}...</p>
                     </div>
                 </div>
             </div>
         </c:if>
-        <%-- Danh sách các tin phụ --%>
         <div class="category-sub-news">
-            <c:forEach var="news" items="${sportNews}" begin="1">
-                <h4 class="sub-news-title"><a href="#">${news.title}</a></h4>
+            <c:forEach var="news" items="${techNews}" begin="1">
+                <h4 class="sub-news-title"><a href="${pageContext.request.contextPath}/news-detail?id=${news.id}">${news.title}</a></h4>
             </c:forEach>
         </div>
     </div>
