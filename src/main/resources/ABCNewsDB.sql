@@ -189,3 +189,38 @@ INSERT INTO NEWSLETTERS (Email, Enabled) VALUES
 ('testuser4@gmail.com', 1),
 ('testuser5@gmail.com', 1);
 GO
+
+-- ================================================================= --
+-- ===== CẬP NHẬT CSDL CHO HỆ THỐNG PHÂN QUYỀN MỞ RỘNG (4 TẦNG) ===== --
+-- ================================================================= --
+
+-- 1. Thay đổi cột Role trong bảng USERS từ BIT thành INT
+ALTER TABLE USERS
+ALTER COLUMN [Role] INT NOT NULL;
+GO
+
+-- Cập nhật lại vai trò cho các user hiện có theo quy ước mới
+-- 0 = Độc giả, 1 = Phóng viên, 2 = Quản trị viên
+UPDATE USERS SET [Role] = 2 WHERE Id = 'admin';
+UPDATE USERS SET [Role] = 1 WHERE Id LIKE 'pv%';
+GO
+
+-- 2. Thêm cột Point cho bảng USERS để lưu điểm tích lũy
+ALTER TABLE USERS
+ADD Points INT DEFAULT 0;
+GO
+
+-- 3. Tạo bảng REWARDS để lưu thông tin vật phẩm đổi thưởng
+CREATE TABLE REWARDS (
+    Id VARCHAR(20) PRIMARY KEY,
+    [Name] NVARCHAR(255) NOT NULL,
+    PointsRequired INT NOT NULL,
+    Image NVARCHAR(255)
+);
+GO
+
+-- 4. Thêm một vài vật phẩm mẫu
+INSERT INTO REWARDS (Id, [Name], PointsRequired, Image) VALUES
+('VOUCHER_20K', N'Voucher giảm giá 20.000đ', 200, 'images/rewards/voucher_20k.png'),
+('CUP_ABC', N'Ly sứ ABC News', 500, 'images/rewards/cup_abc.png');
+GO

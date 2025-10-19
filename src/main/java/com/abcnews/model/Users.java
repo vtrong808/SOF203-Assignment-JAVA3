@@ -10,7 +10,8 @@ public class Users {
     private boolean gender; // 1 for Male, 0 for Female
     private String moble;
     private String email;
-    private boolean role; // 1 for Admin, 0 for Reporter
+    private int role; // Sửa từ boolean thành int
+    private int points;
 
     // Constructors, Getters, and Setters...
     public Users() {}
@@ -29,6 +30,8 @@ public class Users {
     public void setMoble(String moble) { this.moble = moble; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-    public boolean isRole() { return role; }
-    public void setRole(boolean role) { this.role = role; }
+    public int getRole() { return role; }
+    public void setRole(int role) { this.role = role; }
+    public int getPoints() { return points; }
+    public void setPoints(int points) { this.points = points; }
 }

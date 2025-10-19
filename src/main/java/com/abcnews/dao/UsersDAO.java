@@ -23,7 +23,8 @@ public class UsersDAO {
                     user.setPassword(rs.getString("Password")); // Không nên lưu password vào session, nhưng tạm thời để đó
                     user.setFullname(rs.getString("Fullname"));
                     user.setEmail(rs.getString("Email"));
-                    user.setRole(rs.getBoolean("Role"));
+                    user.setRole(rs.getInt("Role"));
+                    user.setPoints(rs.getInt("Points"));
                     return user;
                 }
             }
@@ -34,7 +35,7 @@ public class UsersDAO {
     }
 
     public void insertUser(Users user) {
-        String sql = "INSERT INTO USERS (Id, [Password], Fullname, Email, [Role]) VALUES (?, ?, ?, ?, 0)"; // Mặc định role là 0 (Phóng viên)
+        String sql = "INSERT INTO USERS (Id, [Password], Fullname, Email, [Role], Points) VALUES (?, ?, ?, ?, 0, 0)";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, user.getId());
