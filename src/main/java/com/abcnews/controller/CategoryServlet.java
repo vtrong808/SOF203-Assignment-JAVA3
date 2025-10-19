@@ -20,14 +20,17 @@ public class CategoryServlet extends HttpServlet {
         String categoryId = req.getParameter("id");
 
         NewsDAO newsDAO = new NewsDAO();
-        CategoriesDAO categoriesDAO = new CategoriesDAO();
+        CategoriesDAO categoriesDAO = new CategoriesDAO(); // <-- Tạo đối tượng DAO mới
 
+        // Lấy danh sách tin tức
         List<News> newsList = newsDAO.getNewsByCategoryId(categoryId, 20);
+        // Lấy thông tin chi tiết của danh mục
         Categories category = categoriesDAO.findById(categoryId);
 
         req.setAttribute("newsList", newsList);
-        req.setAttribute("category", category); // Gửi cả đối tượng category đi
+        req.setAttribute("category", category); // <-- Gửi cả đối tượng category đi
 
+        // Chuyển tiếp đến jsp
         req.getRequestDispatcher("/category.jsp").forward(req, resp);
     }
 }

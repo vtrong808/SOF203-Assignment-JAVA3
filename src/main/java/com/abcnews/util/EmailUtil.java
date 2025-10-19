@@ -8,7 +8,7 @@ import java.util.Properties;
 public class EmailUtil {
     // !!! CẢNH BÁO: HÃY THAY THẾ BẰNG THÔNG TIN EMAIL CỦA BẠN !!!
     private static final String FROM_EMAIL = "vtrong808@gmail.com"; // Email của bạn
-    private static final String APP_PASSWORD = "A1234b1234@@@"; // Mật khẩu ứng dụng
+    private static final String APP_PASSWORD = "ffijqhfjgdsyjzrb"; // Mật khẩu ứng dụng
 
     public static void sendEmail(String toEmail, String subject, String body) {
         Properties props = new Properties();

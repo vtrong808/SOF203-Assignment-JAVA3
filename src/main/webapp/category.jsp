@@ -5,12 +5,13 @@
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <jsp:include page="/layout/header.jsp">
-    <jsp:param name="activePage" value="${categoryId}"/>
+    <jsp:param name="activePage" value="${category.id}"/>
 </jsp:include>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pages/category.css">
 
 <div class="container">
-    <h1 class="page-title">Tin tức danh mục: ${category.name}</h1>
+    <h1 class="page-title">Tin tức Danh mục: ${category.name}</h1>
 
     <div class="category-news-list">
         <c:forEach var="news" items="${newsList}">

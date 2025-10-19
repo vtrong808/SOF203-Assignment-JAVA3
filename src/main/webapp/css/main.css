@@ -164,14 +164,17 @@ main.container, main.container-fluid {
     border: 1px solid var(--border-color);
     border-radius: 20px;
     overflow: hidden;
+    background-color: var(--background-color); /* Thêm nền cho form */
 }
 
+/* --- Style chung cho input --- */
 .search-form input, .newsletter-form input {
     border: none;
     background: transparent;
     color: var(--text-color);
     outline: none;
     font-size: 0.9rem;
+    transition: all 0.3s ease; /* Thêm hiệu ứng chuyển động */
 }
 
 .search-form input {
@@ -182,30 +185,41 @@ main.container, main.container-fluid {
     flex-grow: 1;
     border: 1px solid var(--border-color);
     background: var(--background-color);
-    padding: 10px;
-    border-radius: 5px 0 0 5px;
+    padding: 10px 15px; /* Tăng padding trái/phải */
+    border-radius: 50px 0 0 50px; /* Bo tròn mạnh hơn */
 }
 
+/* Hiệu ứng khi focus vào ô nhập liệu */
+.search-form input:focus, .newsletter-form input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+
+/* --- Style chung cho button --- */
 .search-form button, .newsletter-form button {
     background-color: var(--primary-color);
     border: none;
     color: var(--background-color);
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease; /* Thêm hiệu ứng chuyển động */
+    font-weight: bold;
 }
 
 .search-form button {
     padding: 8px 12px;
 }
 
-.search-form button:hover {
-    background-color: #ff9eb2;
+.newsletter-form button {
+    padding: 10px 20px; /* Tăng padding cho nút */
+    border-radius: 0 50px 50px 0; /* Bo tròn tương ứng với input */
 }
 
-.newsletter-form button {
-    padding: 10px 15px;
-    border-radius: 0 5px 5px 0;
-    font-weight: bold;
+/* --- Hiệu ứng Hover cho Button --- */
+.search-form button:hover, .newsletter-form button:hover {
+    background-color: #fff; /* Chuyển nền trắng khi hover */
+    color: #000; /* Chữ đen */
+    transform: scale(1.05); /* Phóng to nhẹ nút bấm */
 }
 
 /* == 5. Footer == */
