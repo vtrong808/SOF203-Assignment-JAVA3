@@ -7,19 +7,33 @@
 
 <main class="container">
     <div class="news-detail-container">
-        <h1>${news.title}</h1>
-        <c:if test="${sessionScope.user != null && (sessionScope.user.role == 0 || sessionScope.user.role == 1)}">
-            <div id="point-timer-box" class="point-timer">
-                Bạn sẽ nhận được <strong>10 điểm</strong> sau <span id="countdown">10</span> giây nữa...
+        <%-- Cấu trúc lưới 2 cột mới --%>
+        <div class="detail-grid">
+            <%-- CỘT 1: HÌNH ẢNH (sẽ đứng yên khi cuộn) --%>
+            <div class="detail-grid-image">
+                <img src="${pageContext.request.contextPath}/${news.image}" alt="${news.title}">
             </div>
-        </c:if>
-        <div class="news-meta">
-            <span>Tác giả: ${news.author}</span> |
-            <span>Ngày đăng: <fmt:formatDate value="${news.postedDate}" pattern="dd/MM/yyyy HH:mm"/></span>
-        </div>
-        <img src="${pageContext.request.contextPath}/${news.image}" alt="${news.title}" class="news-detail-image">
-        <div class="news-content">
-            ${news.content}
+
+            <%-- CỘT 2: NỘI DUNG (sẽ cuộn được) --%>
+            <div class="detail-grid-content">
+                <h1>${news.title}</h1>
+
+                <div class="news-meta">
+                    <span><i class="fa-solid fa-user-pen"></i> Tác giả: ${news.author}</span>
+                    <span><i class="fa-solid fa-calendar-days"></i> Ngày đăng: <fmt:formatDate value="${news.postedDate}" pattern="dd/MM/yyyy HH:mm"/></span>
+                </div>
+
+                <%-- Hiển thị hộp tích điểm nếu là độc giả/phóng viên --%>
+                <c:if test="${sessionScope.user != null && (sessionScope.user.role == 0 || sessionScope.user.role == 1)}">
+                    <div id="point-timer-box" class="point-timer">
+                        Bạn sẽ nhận được <strong>10 điểm</strong> sau <span id="countdown">10</span> giây nữa...
+                    </div>
+                </c:if>
+
+                <div class="news-content">
+                    ${news.content}
+                </div>
+            </div>
         </div>
     </div>
 </main>

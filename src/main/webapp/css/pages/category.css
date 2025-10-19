@@ -56,3 +56,143 @@
     border-color: #27ae60;
     color: #fff;
 }
+
+/* ===================================================
+   FINAL CSS FOR NEWS DETAIL & CATEGORY PAGE
+   =================================================== */
+
+/* --- STYLES FOR CATEGORY PAGE (TRANG DANH MỤC) --- */
+.page-title {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.news-item-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.news-item-row:last-child {
+    border-bottom: none;
+}
+
+.news-item-image {
+    flex-shrink: 0;
+    width: 300px;
+    height: 180px;
+}
+
+.news-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.news-item-title a {
+    color: var(--text-color);
+    font-size: 1.5rem;
+}
+
+.news-item-excerpt {
+    margin: 0.5rem 0 1rem 0;
+    color: var(--secondary-text-color);
+}
+
+/* --- STYLES FOR NEWS DETAIL PAGE (TRANG CHI TIẾT) --- */
+
+/* Bỏ style mặc định của container cũ */
+.news-detail-container {
+    padding: 0;
+    max-width: 100%;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* Layout lưới 2 cột */
+.detail-grid {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+/* Cột 1: Hình ảnh */
+.detail-grid-image {
+    position: sticky;
+    top: 100px;
+    height: 80vh;
+}
+
+.detail-grid-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4); /* Thêm đổ bóng cho ảnh */
+}
+
+/* Cột 2: Nội dung */
+.detail-grid-content h1 {
+    font-size: 2.8rem;
+    line-height: 1.25;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.detail-grid-content .news-meta {
+    display: flex;
+    gap: 1.5rem;
+    color: var(--secondary-text-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.detail-grid-content .news-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.detail-grid-content .news-content {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: var(--secondary-text-color);
+}
+
+.detail-grid-content .news-content p {
+    margin-bottom: 1.8rem;
+}
+
+.detail-grid-content .news-content strong {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+/* --- POINT TIMER (DÙNG CHUNG) --- */
+.point-timer {
+    background-color: var(--surface-color);
+    border-left: 5px solid var(--primary-color);
+    padding: 15px;
+    margin: 1.5rem 0;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.1rem;
+    transition: all 0.5s ease;
+}
+
+.point-timer.success {
+    background-color: #2ecc71;
+    border-color: #27ae60;
+    color: #fff;
+}
