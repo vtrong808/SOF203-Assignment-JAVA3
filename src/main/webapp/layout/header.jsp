@@ -30,6 +30,14 @@
                     <li><a href="${pageContext.request.contextPath}/category?id=CN" class="${param.activePage == 'CN' ? 'active' : ''}">Công nghệ</a></li>
                     <li><a href="${pageContext.request.contextPath}/category?id=TT" class="${param.activePage == 'TT' ? 'active' : ''}">Thể thao</a></li>
                     <li><a href="${pageContext.request.contextPath}/category?id=GT" class="${param.activePage == 'GT' ? 'active' : ''}">Giải trí</a></li>
+
+                    <c:if test="${sessionScope.user != null && (sessionScope.user.role == 0 || sessionScope.user.role == 1)}">
+                        <li><a href="${pageContext.request.contextPath}/rewards" class="${param.activePage == 'rewards' ? 'active' : ''}">Đổi thưởng</a></li>
+                    </c:if>
+
+                    <c:if test="${sessionScope.user.role == 1}">
+                        <li><a href="${pageContext.request.contextPath}/reporter/manage-news">Quản lý Tin tức</a></li>
+                    </c:if>
                 </ul>
                 <c:if test="${sessionScope.user.role == 2}">
                     <ul class="admin-menu">
@@ -42,7 +50,14 @@
             <div class="header-actions">
                  <c:choose>
                     <c:when test="${sessionScope.user != null}">
-                        <span class="welcome-user">${sessionScope.user.fullname}</span>
+                        <div class="user-info">
+                            <span class="welcome-user">${sessionScope.user.fullname}</span>
+                            <c:if test="${sessionScope.user.role == 0 || sessionScope.user.role == 1}">
+                                <span class="user-points">
+                                    <i class="fa-solid fa-star"></i> ${sessionScope.user.points} điểm
+                                </span>
+                            </c:if>
+                        </div>
                         <a href="${pageContext.request.contextPath}/logout" class="auth-link">Đăng xuất</a>
                     </c:when>
                     <c:otherwise>

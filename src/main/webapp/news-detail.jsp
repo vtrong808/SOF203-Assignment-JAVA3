@@ -8,6 +8,11 @@
 <main class="container">
     <div class="news-detail-container">
         <h1>${news.title}</h1>
+        <c:if test="${sessionScope.user != null && (sessionScope.user.role == 0 || sessionScope.user.role == 1)}">
+            <div id="point-timer-box" class="point-timer">
+                Bạn sẽ nhận được <strong>10 điểm</strong> sau <span id="countdown">10</span> giây nữa...
+            </div>
+        </c:if>
         <div class="news-meta">
             <span>Tác giả: ${news.author}</span> |
             <span>Ngày đăng: <fmt:formatDate value="${news.postedDate}" pattern="dd/MM/yyyy HH:mm"/></span>
@@ -20,20 +25,36 @@
 </main>
 
 <script>
-    // Hàm gửi yêu cầu cộng điểm
-    function addReadingPoints() {
-        // Sử dụng Fetch API để gửi yêu cầu POST đến servlet
-        fetch('${pageContext.request.contextPath}/add-point', {
-            method: 'POST'
-        })
-        .then(response => console.log('Point request sent.'))
-        .catch(error => console.error('Error:', error));
-    }
+    <c:if test="${sessionScope.user != null && (sessionScope.user.role == 0 || sessionScope.user.role == 1)}">
+        const countdownElement = document.getElementById('countdown');
+        const timerBox = document.getElementById('point-timer-box');
+        let timeLeft = 10;
 
-    // Chỉ thực hiện đếm giờ nếu người dùng là độc giả đã đăng nhập (role == 0)
-    <c:if test="${sessionScope.user != null && sessionScope.user.role == 0}">
-        console.log('User is a reader. Starting 10s timer to add points...');
-        setTimeout(addReadingPoints, 10000); // 10000 milliseconds = 10 giây
+        // Hàm gửi yêu cầu cộng điểm
+        function addReadingPoints() {
+            fetch('${pageContext.request.contextPath}/add-point', {
+                method: 'POST'
+            })
+            .then(response => {
+                if(response.ok) {
+                    console.log('Point request sent successfully.');
+                    // Cập nhật giao diện sau khi thành công
+                    timerBox.innerHTML = '<strong>+10 điểm!</strong> Bạn đã nhận được điểm thưởng.';
+                    timerBox.classList.add('success');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Bắt đầu đếm ngược
+        const countdownInterval = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval); // Dừng đếm ngược
+                addReadingPoints(); // Gọi hàm cộng điểm
+            }
+        }, 1000); // Cập nhật mỗi giây
     </c:if>
 </script>
 

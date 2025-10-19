@@ -16,13 +16,21 @@ public class PointServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
-        // Chỉ cộng điểm khi người dùng đã đăng nhập VÀ là độc giả (role=0)
         if (session != null && session.getAttribute("user") != null) {
             Users user = (Users) session.getAttribute("user");
-            if (user.getRole() == 0) { // 0 là vai trò Độc giả
+            if (user.getRole() == 0 || user.getRole() == 1) { // 0=Độc giả, 1=Phóng viên
                 UsersDAO usersDAO = new UsersDAO();
-                usersDAO.addPoints(user.getId(), 10); // Cộng 10 điểm
+                int pointsToAdd = 10; // Số điểm cộng
+                usersDAO.addPoints(user.getId(), pointsToAdd);
+
+                // === DÒNG MÃ MỚI: Cập nhật lại điểm trong session ===
+                int newPoints = user.getPoints() + pointsToAdd;
+                user.setPoints(newPoints);
+                session.setAttribute("user", user); // Lưu lại user đã được cập nhật
+                // =======================================================
+
                 System.out.println("Added 10 points for user: " + user.getId());
+                resp.setStatus(HttpServletResponse.SC_OK); // Trả về status 200 OK
             }
         }
     }

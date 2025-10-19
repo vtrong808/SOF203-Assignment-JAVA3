@@ -282,3 +282,20 @@ main.container, main.container-fluid {
         grid-template-columns: 1fr;
     }
 }
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.user-points {
+    background-color: rgba(255, 182, 193, 0.15);
+    color: var(--primary-color);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.user-points .fa-star {
+    margin-right: 5px;
+}

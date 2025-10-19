@@ -143,4 +143,67 @@ public class NewsDAO {
         }
         return null;
     }
+
+    /**
+     * Thêm một bài viết mới vào cơ sở dữ liệu.
+     * @param news Đối tượng News chứa thông tin cần thêm.
+     */
+    public void insertNews(News news) {
+        String sql = "INSERT INTO NEWS (Id, Title, Content, Image, Author, CategoryId, Home) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, news.getId());
+            ps.setString(2, news.getTitle());
+            ps.setString(3, news.getContent());
+            ps.setString(4, news.getImage());
+            ps.setString(5, news.getAuthor());
+            ps.setString(6, news.getCategoryId());
+            ps.setBoolean(7, news.isHome());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Cập nhật một bài viết đã có.
+     * @param news Đối tượng News chứa thông tin cần cập nhật.
+     * @return true nếu cập nhật thành công, false nếu thất bại.
+     */
+    public boolean updateNews(News news) {
+        String sql = "UPDATE NEWS SET Title = ?, Content = ?, Image = ?, CategoryId = ?, Home = ? WHERE Id = ? AND Author = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, news.getTitle());
+            ps.setString(2, news.getContent());
+            ps.setString(3, news.getImage());
+            ps.setString(4, news.getCategoryId());
+            ps.setBoolean(5, news.isHome());
+            ps.setString(6, news.getId());
+            ps.setString(7, news.getAuthor()); // Chỉ tác giả mới được sửa
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Xóa một bài viết dựa vào ID và tác giả.
+     * @param newsId ID của bài viết cần xóa.
+     * @param authorId ID của tác giả (phóng viên) thực hiện xóa.
+     * @return true nếu xóa thành công, false nếu thất bại.
+     */
+    public boolean deleteNews(String newsId, String authorId) {
+        String sql = "DELETE FROM NEWS WHERE Id = ? AND Author = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newsId);
+            ps.setString(2, authorId); // Chỉ tác giả mới được xóa
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

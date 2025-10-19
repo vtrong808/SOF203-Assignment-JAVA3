@@ -1,0 +1,83 @@
+.page-title {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #000;
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary:hover {
+    background-color: #ff9eb2;
+}
+
+.management-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+.management-table th, .management-table td {
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.management-table th {
+    background-color: var(--surface-color);
+}
+
+.btn-action {
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: #fff;
+    text-decoration: none;
+    margin-right: 5px;
+}
+.btn-edit { background-color: #3498db; }
+.btn-delete { background-color: #e74c3c; }
+
+/* Form styles */
+.management-form {
+    background-color: var(--surface-color);
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.management-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.management-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.management-form input[type="text"],
+.management-form textarea,
+.management-form select {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    color: var(--text-color);
+}
+
+.management-form textarea {
+    resize: vertical;
+}
