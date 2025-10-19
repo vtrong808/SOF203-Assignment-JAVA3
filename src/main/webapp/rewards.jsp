@@ -11,11 +11,21 @@
 <div class="container">
     <h1 class="page-title">Cửa hàng Đổi thưởng</h1>
 
+    <%-- ===== KHU VỰC HIỂN THỊ THÔNG BÁO ===== --%>
+    <c:if test="${not empty sessionScope.redeem_success}">
+        <div class="alert alert-success">${sessionScope.redeem_success}</div>
+        <c:remove var="redeem_success" scope="session"/>
+    </c:if>
+    <c:if test="${not empty sessionScope.redeem_error}">
+        <div class="alert alert-error">${sessionScope.redeem_error}</div>
+        <c:remove var="redeem_error" scope="session"/>
+    </c:if>
+    <%-- ========================================== --%>
+
     <div class="rewards-grid">
         <c:forEach var="reward" items="${rewardsList}">
             <div class="reward-card">
                 <div class="reward-image">
-                    <%-- Giả sử ảnh nằm trong thư mục /images/rewards/ --%>
                     <img src="${pageContext.request.contextPath}/${reward.image}" alt="${reward.name}">
                 </div>
                 <div class="reward-content">
@@ -25,7 +35,12 @@
                 <div class="reward-action">
                     <c:choose>
                         <c:when test="${sessionScope.user.points >= reward.pointsRequired}">
-                            <button class="redeem-btn">Đổi</button>
+                            <%-- BIẾN NÚT BẤM THÀNH FORM --%>
+                            <form action="${pageContext.request.contextPath}/redeem" method="post">
+                                <input type="hidden" name="rewardName" value="${reward.name}">
+                                <input type="hidden" name="pointsRequired" value="${reward.pointsRequired}">
+                                <button type="submit" class="redeem-btn">Đổi</button>
+                            </form>
                         </c:when>
                         <c:otherwise>
                             <button class="redeem-btn disabled" disabled>Không đủ điểm</button>

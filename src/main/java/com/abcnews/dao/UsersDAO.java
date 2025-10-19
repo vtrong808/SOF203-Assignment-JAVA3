@@ -59,4 +59,28 @@ public class UsersDAO {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Trừ điểm của người dùng sau khi đổi thưởng.
+     * @param userId ID của người dùng.
+     * @param pointsToSubtract Số điểm cần trừ.
+     * @return true nếu trừ điểm thành công, false nếu thất bại.
+     */
+    public boolean subtractPoints(String userId, int pointsToSubtract) {
+        // Câu lệnh SQL này đảm bảo người dùng không thể có điểm âm
+        String sql = "UPDATE USERS SET Points = Points - ? WHERE Id = ? AND Points >= ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, pointsToSubtract);
+            ps.setString(2, userId);
+            ps.setInt(3, pointsToSubtract); // Điều kiện kiểm tra đủ điểm
+
+            // executeUpdate() trả về số dòng bị ảnh hưởng.
+            // Nếu > 0, nghĩa là cập nhật thành công.
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

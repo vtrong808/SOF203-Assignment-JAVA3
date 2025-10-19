@@ -26,17 +26,24 @@
             <div class="menu-container">
                 <ul class="main-menu">
                     <li><a href="${pageContext.request.contextPath}/home" class="${param.activePage == 'home' ? 'active' : ''}">Trang chủ</a></li>
-                    <li><a href="${pageContext.request.contextPath}/category?id=TG" class="${param.activePage == 'TG' ? 'active' : ''}">Thế giới</a></li>
-                    <li><a href="${pageContext.request.contextPath}/category?id=CN" class="${param.activePage == 'CN' ? 'active' : ''}">Công nghệ</a></li>
-                    <li><a href="${pageContext.request.contextPath}/category?id=TT" class="${param.activePage == 'TT' ? 'active' : ''}">Thể thao</a></li>
-                    <li><a href="${pageContext.request.contextPath}/category?id=GT" class="${param.activePage == 'GT' ? 'active' : ''}">Giải trí</a></li>
 
+                    <%-- ===== HIỂN THỊ CÁC LOẠI TIN ĐỘNG TỪ DATABASE ===== --%>
+                    <c:forEach var="cat" items="${applicationScope.appCategories}">
+                        <li>
+                            <a href="${pageContext.request.contextPath}/category?id=${cat.id}" class="${param.activePage == cat.id ? 'active' : ''}">
+                                ${cat.name}
+                            </a>
+                        </li>
+                    </c:forEach>
+
+                    <%-- Link Đổi thưởng (chỉ hiện khi đã đăng nhập) --%>
                     <c:if test="${sessionScope.user != null && (sessionScope.user.role == 0 || sessionScope.user.role == 1)}">
                         <li><a href="${pageContext.request.contextPath}/rewards" class="${param.activePage == 'rewards' ? 'active' : ''}">Đổi thưởng</a></li>
                     </c:if>
 
+                    <%-- Link Quản lý cho Phóng viên --%>
                     <c:if test="${sessionScope.user.role == 1}">
-                        <li><a href="${pageContext.request.contextPath}/reporter/manage-news">Quản lý Tin tức</a></li>
+                        <li><a href="${pageContext.request.contextPath}/reporter/manage-news" class="${param.activePage == 'manage-news' ? 'active' : ''}">Quản lý Tin tức</a></li>
                     </c:if>
                 </ul>
                 <c:if test="${sessionScope.user.role == 2}">
