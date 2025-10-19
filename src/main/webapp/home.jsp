@@ -17,7 +17,7 @@
                 <div class="featured-news-card">
                     <a href="#" class="news-card-image"><img src="${pageContext.request.contextPath}/${featuredNews.image}" alt="${featuredNews.title}"></a>
                     <div class="news-card-content">
-                        <h2 class="news-card-title"><a href="#">${featuredNews.title}</a></h2>
+                        <h2 class="news-card-title"><a href="${pageContext.request.contextPath}/news-detail?id=${news.id}"></a></h2>
                         <p class="news-card-excerpt">${fn:substring(featuredNews.content, 0, 150)}...</p>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                 <h3 class="widget-title">Đọc nhiều nhất</h3>
                 <ul class="most-viewed-list">
                     <c:forEach var="news" items="${mostViewedNews}" varStatus="loop">
-                        <li><span class="rank">${loop.count}</span><a href="#">${news.title}</a></li>
+                        <li><span class="rank">${loop.count}</span><a href="${pageContext.request.contextPath}/news-detail?id=${news.id}"></a></li>
                     </c:forEach>
                 </ul>
             </div>
@@ -45,7 +45,7 @@
                 <div class="news-card-small">
                     <a href="#" class="news-card-image"><img src="${pageContext.request.contextPath}/${techNews[0].image}" alt="${techNews[0].title}"></a>
                     <div class="news-card-content">
-                        <h3 class="news-card-title"><a href="#">${techNews[0].title}</a></h3>
+                        <h3 class="news-card-title"><a href="${pageContext.request.contextPath}/news-detail?id=${news.id}"></a></h3>
                         <p class="news-card-excerpt-small">${fn:substring(techNews[0].content, 0, 100)}...</p>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                  <div class="news-card-small">
                     <a href="#" class="news-card-image"><img src="${pageContext.request.contextPath}/${sportNews[0].image}" alt="${sportNews[0].title}"></a>
                     <div class="news-card-content">
-                        <h3 class="news-card-title"><a href="#">${sportNews[0].title}</a></h3>
+                        <h3 class="news-card-title"><a href="${pageContext.request.contextPath}/news-detail?id=${news.id}"></a></h3>
                         <p class="news-card-excerpt-small">${fn:substring(sportNews[0].content, 0, 100)}...</p>
                     </div>
                 </div>

@@ -47,4 +47,16 @@ public class UsersDAO {
             e.printStackTrace();
         }
     }
+
+    public void addPoints(String userId, int pointsToAdd) {
+        String sql = "UPDATE USERS SET Points = Points + ? WHERE Id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, pointsToAdd);
+            ps.setString(2, userId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

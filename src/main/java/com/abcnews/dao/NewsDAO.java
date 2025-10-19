@@ -166,4 +166,20 @@ public class NewsDAO {
         }
         return newsList;
     }
+
+    public News findById(String id) {
+        String sql = "SELECT * FROM NEWS WHERE Id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToNews(rs); // Sử dụng lại hàm tối ưu của chúng ta
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
