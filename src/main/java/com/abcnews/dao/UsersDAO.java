@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsersDAO {
 
@@ -82,5 +84,92 @@ public class UsersDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public List<Users> getAllUsersAndReporters() {
+        List<Users> userList = new ArrayList<>();
+        // Lấy tất cả user không phải là admin
+        String sql = "SELECT * FROM USERS WHERE Role < 2 ORDER BY Role DESC, Id ASC";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Users user = new Users();
+                user.setId(rs.getString("Id"));
+                user.setFullname(rs.getString("Fullname"));
+                user.setEmail(rs.getString("Email"));
+                user.setRole(rs.getInt("Role"));
+                user.setPoints(rs.getInt("Points"));
+                userList.add(user);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
+    public boolean updateUserByAdmin(Users user) {
+        String sql = "UPDATE USERS SET Fullname = ?, Email = ?, Role = ?, Points = ? WHERE Id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getFullname());
+            ps.setString(2, user.getEmail());
+            ps.setInt(3, user.getRole());
+            ps.setInt(4, user.getPoints());
+            ps.setString(5, user.getId());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteUser(String userId) {
+        // Cần cẩn thận với khóa ngoại, trước tiên phải xóa/cập nhật các bài viết của phóng viên này
+        String updateNewsSql = "UPDATE NEWS SET Author = NULL WHERE Author = ?";
+        String deleteUserSql = "DELETE FROM USERS WHERE Id = ?";
+
+        try (Connection conn = DBContext.getConnection()) {
+            conn.setAutoCommit(false); // Bắt đầu transaction
+
+            try (PreparedStatement psNews = conn.prepareStatement(updateNewsSql)) {
+                psNews.setString(1, userId);
+                psNews.executeUpdate(); // Cập nhật các bài viết trước
+            }
+
+            try (PreparedStatement psUser = conn.prepareStatement(deleteUserSql)) {
+                psUser.setString(1, userId);
+                int result = psUser.executeUpdate();
+                conn.commit(); // Hoàn tất transaction
+                return result > 0;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Cần có logic rollback ở đây nếu CSDL hỗ trợ
+            return false;
+        }
+    }
+
+    public Users findUserById(String id) {
+        String sql = "SELECT * FROM USERS WHERE Id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Users user = new Users();
+                    user.setId(rs.getString("Id"));
+                    user.setFullname(rs.getString("Fullname"));
+                    user.setEmail(rs.getString("Email"));
+                    user.setRole(rs.getInt("Role"));
+                    user.setPoints(rs.getInt("Points"));
+                    return user;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

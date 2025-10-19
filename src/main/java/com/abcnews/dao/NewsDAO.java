@@ -206,4 +206,33 @@ public class NewsDAO {
             return false;
         }
     }
+
+    public boolean updateNewsByAdmin(News news) {
+        String sql = "UPDATE NEWS SET Title = ?, Content = ?, Image = ?, CategoryId = ?, Home = ? WHERE Id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, news.getTitle());
+            ps.setString(2, news.getContent());
+            ps.setString(3, news.getImage());
+            ps.setString(4, news.getCategoryId());
+            ps.setBoolean(5, news.isHome());
+            ps.setString(6, news.getId());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteNewsByAdmin(String newsId) {
+        String sql = "DELETE FROM NEWS WHERE Id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newsId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

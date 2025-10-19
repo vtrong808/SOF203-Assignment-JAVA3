@@ -32,4 +32,64 @@ public class RewardsDAO {
         }
         return rewardsList;
     }
+
+    public Rewards findRewardById(String id) {
+        String sql = "SELECT * FROM REWARDS WHERE Id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Rewards reward = new Rewards();
+                    reward.setId(rs.getString("Id"));
+                    reward.setName(rs.getString("Name"));
+                    reward.setPointsRequired(rs.getInt("PointsRequired"));
+                    reward.setImage(rs.getString("Image"));
+                    return reward;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void addReward(Rewards reward) {
+        String sql = "INSERT INTO REWARDS (Id, [Name], PointsRequired, Image) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, reward.getId());
+            ps.setString(2, reward.getName());
+            ps.setInt(3, reward.getPointsRequired());
+            ps.setString(4, reward.getImage());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateReward(Rewards reward) {
+        String sql = "UPDATE REWARDS SET [Name] = ?, PointsRequired = ?, Image = ? WHERE Id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, reward.getName());
+            ps.setInt(2, reward.getPointsRequired());
+            ps.setString(3, reward.getImage());
+            ps.setString(4, reward.getId());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteReward(String rewardId) {
+        String sql = "DELETE FROM REWARDS WHERE Id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, rewardId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

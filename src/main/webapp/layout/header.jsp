@@ -48,9 +48,7 @@
                 </ul>
                 <c:if test="${sessionScope.user.role == 2}">
                     <ul class="admin-menu">
-                         <li class="admin-menu-item"><a href="#">Quản lý Tin tức</a></li>
-                         <li class="admin-menu-item"><a href="#">Quản lý Loại tin</a></li>
-                         <li class="admin-menu-item"><a href="#">Quản lý Người dùng</a></li>
+                        <li class="admin-menu-item"><a href="${pageContext.request.contextPath}/admin/dashboard">Trang Quản Trị</a></li>
                     </ul>
                 </c:if>
             </div>
