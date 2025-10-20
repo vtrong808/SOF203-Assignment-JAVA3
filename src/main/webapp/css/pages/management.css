@@ -1,3 +1,7 @@
+/* ===================================================
+   FINAL CSS FOR MANAGEMENT PAGES
+   =================================================== */
+
 .page-title {
     font-size: 2rem;
     color: var(--primary-color);
@@ -6,18 +10,28 @@
     padding-bottom: 1rem;
 }
 
+/* --- Buttons --- */
 .btn {
     display: inline-block;
     padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    background-color: var(--surface-color); /* Thêm màu nền mặc định cho nút Hủy */
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--background-color);
 }
 
 .btn-primary {
     background-color: var(--primary-color);
     color: #000;
+    border-color: var(--primary-color);
     margin-bottom: 1.5rem;
 }
 
@@ -25,6 +39,8 @@
     background-color: #ff9eb2;
 }
 
+
+/* --- Management Table --- */
 .management-table {
     width: 100%;
     border-collapse: collapse;
@@ -47,15 +63,19 @@
     color: #fff;
     text-decoration: none;
     margin-right: 5px;
+    font-size: 0.9rem;
 }
 .btn-edit { background-color: #3498db; }
 .btn-delete { background-color: #e74c3c; }
 
-/* Form styles */
+
+/* --- Management Form (Trang Thêm/Sửa) --- */
 .management-form {
     background-color: var(--surface-color);
-    padding: 2rem;
+    padding: 2.5rem;
     border-radius: 8px;
+    max-width: 700px; /* Giới hạn chiều rộng form cho đẹp hơn */
+    margin: 0 auto;   /* Căn giữa form */
 }
 
 .management-form .form-group {
@@ -64,20 +84,88 @@
 
 .management-form label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem; /* Tăng khoảng cách với input */
+    color: var(--secondary-text-color); /* Sửa màu chữ cho dễ đọc */
+    font-weight: 500;
 }
 
+/* Áp dụng cho tất cả các loại input */
 .management-form input[type="text"],
+.management-form input[type="password"],
+.management-form input[type="email"],
+.management-form input[type="number"],
 .management-form textarea,
 .management-form select {
     width: 100%;
-    padding: 10px;
+    padding: 12px; /* Tăng padding */
     background-color: var(--background-color);
     border: 1px solid var(--border-color);
     border-radius: 5px;
     color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hiệu ứng khi focus vào ô nhập liệu */
+.management-form input:focus,
+.management-form textarea:focus,
+.management-form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.2);
 }
 
 .management-form textarea {
     resize: vertical;
+    min-height: 120px;
+}
+
+/* Căn chỉnh lại các nút trong form */
+.management-form .btn {
+    margin-right: 10px;
+}
+
+/* =================================
+   STYLES FOR CUSTOM FILE UPLOAD BUTTON
+   ================================= */
+
+.file-upload-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Ẩn đi input file mặc định một cách thông minh */
+.file-input-hidden {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+/* Style cho label để nó trông giống một cái nút */
+.file-input-label.btn {
+    display: inline-flex; /* Sử dụng flex để căn icon và chữ */
+    align-items: center;
+    gap: 8px;
+    margin: 0; /* Ghi đè lại margin-bottom của .btn-primary */
+    cursor: pointer;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.file-input-label.btn:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #000;
+}
+
+/* Style cho phần hiển thị tên tệp */
+.file-name-display {
+    color: var(--secondary-text-color);
+    font-style: italic;
+    font-size: 0.9rem;
 }

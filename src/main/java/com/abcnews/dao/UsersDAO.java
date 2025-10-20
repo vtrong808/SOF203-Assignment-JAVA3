@@ -172,4 +172,42 @@ public class UsersDAO {
         }
         return null;
     }
+
+    public void addUserByAdmin(Users user) {
+        String sql = "INSERT INTO USERS (Id, [Password], Fullname, Email, [Role], Points) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getId());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getFullname());
+            ps.setString(4, user.getEmail());
+            ps.setInt(5, user.getRole());
+            ps.setInt(6, user.getPoints());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Lấy tất cả người dùng có vai trò là Phóng viên (Role = 1).
+     * @return Danh sách các phóng viên.
+     */
+    public List<Users> getAllReporters() {
+        List<Users> reporterList = new ArrayList<>();
+        String sql = "SELECT * FROM USERS WHERE Role = 1 ORDER BY Fullname ASC";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Users user = new Users();
+                user.setId(rs.getString("Id"));
+                user.setFullname(rs.getString("Fullname"));
+                reporterList.add(user);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return reporterList;
+    }
 }

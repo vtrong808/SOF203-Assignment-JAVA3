@@ -7,6 +7,20 @@
 
 <div class="container">
     <h1 class="page-title">Quản lý Toàn bộ Tin tức</h1>
+
+    <%-- ===== THANH LỌC PHÓNG VIÊN ===== --%>
+    <form action="${pageContext.request.contextPath}/admin/manage-news" method="GET" class="filter-form">
+        <select name="authorFilter">
+            <option value="all">-- Lọc theo tất cả phóng viên --</option>
+            <c:forEach var="reporter" items="${reporterList}">
+                <option value="${reporter.id}" ${reporter.id == param.authorFilter ? 'selected' : ''}>
+                    ${reporter.fullname}
+                </option>
+            </c:forEach>
+        </select>
+        <button type="submit" class="btn btn-primary">Lọc</button>
+    </form>
+
     <table class="management-table">
         <thead>
         <tr>
@@ -22,10 +36,10 @@
             <tr>
                 <td>${news.id}</td>
                 <td>${news.title}</td>
-                <td>${news.author}</td>
+                <%-- Giữ nguyên cách hiển thị tên tác giả, không cần link --%>
+                <td>${userMap[news.author]}</td>
                 <td><fmt:formatDate value="${news.postedDate}" pattern="dd-MM-yyyy HH:mm"/></td>
                 <td>
-                    <%-- Admin có thể sửa bài của người khác, dùng form của phóng viên --%>
                     <a href="${pageContext.request.contextPath}/admin/edit-news?id=${news.id}" class="btn-action btn-edit">Sửa</a>
                     <a href="${pageContext.request.contextPath}/admin/delete-news?id=${news.id}" class="btn-action btn-delete" onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">Xóa</a>
                 </td>
@@ -34,4 +48,27 @@
         </tbody>
     </table>
 </div>
+
+<%-- Thêm CSS cho thanh lọc --%>
+<style>
+    .filter-form {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        align-items: center;
+        max-width: 500px;
+    }
+    .filter-form select {
+        flex-grow: 1;
+        padding: 10px;
+        background-color: var(--background-color);
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        color: var(--text-color);
+    }
+    .filter-form .btn-primary {
+        margin-bottom: 0; /* Ghi đè margin-bottom của btn-primary */
+    }
+</style>
+
 <jsp:include page="/layout/footer.jsp"/>

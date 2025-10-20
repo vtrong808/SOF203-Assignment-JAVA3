@@ -62,6 +62,8 @@ body {
     width: 90%;
     max-width: 1400px;
     margin: 0 auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 main.container, main.container-fluid {

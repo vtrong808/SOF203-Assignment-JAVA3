@@ -22,11 +22,25 @@
             <input type="number" id="pointsRequired" name="pointsRequired" value="${reward.pointsRequired}" required min="0">
         </div>
         <div class="form-group">
-            <label for="image">URL Hình ảnh (ví dụ: images/rewards/ten-anh.png)</label>
-            <input type="text" id="image" name="image" value="${reward.image}">
+            <label>Chọn hình ảnh vật phẩm</label>
+            <div class="file-upload-wrapper">
+                <input type="file" id="imageFile" name="imageFile" accept="image/*" class="file-input-hidden">
+                <label for="imageFile" class="file-input-label btn">
+                    <i class="fa-solid fa-upload"></i> Chọn tệp...
+                </label>
+                <span class="file-name-display">Chưa có tệp nào được chọn</span>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">Lưu</button>
         <a href="${pageContext.request.contextPath}/admin/manage-rewards" class="btn">Hủy</a>
     </form>
 </div>
+
+<script>
+    document.getElementById('imageFile').addEventListener('change', function(e) {
+        var fileName = e.target.files[0] ? e.target.files[0].name : 'Chưa có tệp nào được chọn';
+        document.querySelector('.file-name-display').textContent = fileName;
+    });
+</script>
+
 <jsp:include page="/layout/footer.jsp"/>

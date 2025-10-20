@@ -8,6 +8,10 @@
 <div class="container">
     <h1 class="page-title">Quản lý Người dùng</h1>
 
+    <a href="${pageContext.request.contextPath}/admin/edit-user" class="btn btn-primary">
+            <i class="fa fa-plus"></i> Thêm người dùng mới
+        </a>
+
     <table class="management-table">
         <thead>
             <tr>
