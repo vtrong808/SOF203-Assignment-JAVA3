@@ -9,6 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 
 public class NewsDAO {
 
@@ -234,5 +240,54 @@ public class NewsDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * Lấy danh sách tin tức sắp xếp theo lượt xem, có thể lọc theo khoảng thời gian.
+     * @param startDate Ngày bắt đầu (null nếu không lọc).
+     * @param endDate Ngày kết thúc (null nếu không lọc).
+     * @return Danh sách tin tức đã sắp xếp.
+     */
+    public List<News> getNewsSortedByViewsFilteredByDate(LocalDateTime startDate, LocalDateTime endDate) {
+        List<News> newsList = new ArrayList<>();
+        // Sắp xếp theo ViewCount giảm dần
+        String baseSql = "SELECT * FROM NEWS ";
+        String conditionSql = "";
+        String orderBySql = " ORDER BY ViewCount DESC";
+
+        // Xây dựng điều kiện lọc thời gian nếu có
+        if (startDate != null && endDate != null) {
+            conditionSql = " WHERE PostedDate >= ? AND PostedDate <= ? ";
+        } else if (startDate != null) {
+            conditionSql = " WHERE PostedDate >= ? ";
+        } else if (endDate != null) {
+            conditionSql = " WHERE PostedDate <= ? ";
+        }
+
+        String sql = baseSql + conditionSql + orderBySql;
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            // Set tham số cho PreparedStatement nếu có điều kiện lọc
+            int paramIndex = 1;
+            if (startDate != null && endDate != null) {
+                ps.setTimestamp(paramIndex++, Timestamp.valueOf(startDate));
+                ps.setTimestamp(paramIndex++, Timestamp.valueOf(endDate));
+            } else if (startDate != null) {
+                ps.setTimestamp(paramIndex++, Timestamp.valueOf(startDate));
+            } else if (endDate != null) {
+                ps.setTimestamp(paramIndex++, Timestamp.valueOf(endDate));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    newsList.add(mapResultSetToNews(rs));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newsList;
     }
 }

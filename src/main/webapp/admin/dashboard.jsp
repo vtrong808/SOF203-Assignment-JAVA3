@@ -26,6 +26,10 @@
             <h3><i class="fa fa-gift"></i> Quản lý Phần thưởng</h3>
             <p>Thêm, sửa, xóa các vật phẩm đổi thưởng.</p>
         </a>
+        <a href="${pageContext.request.contextPath}/admin/statistics" class="dashboard-card">
+                    <h3><i class="fa-solid fa-chart-line"></i> Thống kê Lượt xem</h3>
+                    <p>Xem bảng xếp hạng bài viết theo lượt xem.</p>
+        </a>
     </div>
 </div>
 
