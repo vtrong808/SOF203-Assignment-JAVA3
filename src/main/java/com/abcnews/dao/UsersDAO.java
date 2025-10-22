@@ -240,4 +240,26 @@ public class UsersDAO {
         }
         return null;
     }
+
+    public Users findUserByEmail(String email) {
+        String sql = "SELECT * FROM USERS WHERE Email = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Users user = new Users();
+                    user.setId(rs.getString("Id"));
+                    user.setFullname(rs.getString("Fullname"));
+                    user.setEmail(rs.getString("Email"));
+                    user.setRole(rs.getInt("Role"));
+                    user.setPoints(rs.getInt("Points"));
+                    return user;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
