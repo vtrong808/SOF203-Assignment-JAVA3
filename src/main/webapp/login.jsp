@@ -21,13 +21,15 @@
 
         <form action="${pageContext.request.contextPath}/login" method="POST">
             <div class="form-group">
-                <label for="id">Tên đăng nhập</label>
-                <input type="text" id="id" name="id" required>
-            </div>
+                            <%-- Thay đổi label --%>
+                            <label for="email">Email</label>
+                            <%-- Thay đổi id và name thành "email" --%>
+                            <input type="email" id="email" name="email" required>
+                        </div>
             <div class="form-group">
-                <label for="password">Mật khẩu</label>
-                <input type="password" id="password" name="password" required>
-            </div>
+                            <label for="password">Mật khẩu</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
             <button type="submit" class="form-button">Đăng nhập</button>
         </form>
         <p class="auth-switch">Chưa có tài khoản? <a href="${pageContext.request.contextPath}/register">Đăng ký ngay</a></p>

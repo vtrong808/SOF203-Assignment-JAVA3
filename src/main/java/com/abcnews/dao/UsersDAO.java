@@ -210,4 +210,34 @@ public class UsersDAO {
         }
         return reporterList;
     }
+
+    /**
+     * Tìm người dùng dựa trên email và mật khẩu.
+     * @param email Email của người dùng.
+     * @param password Mật khẩu của người dùng.
+     * @return Đối tượng Users nếu tìm thấy, null nếu không.
+     */
+    public Users findUserByEmailAndPassword(String email, String password) {
+        String sql = "SELECT * FROM USERS WHERE Email = ? AND [Password] = ?"; // Thay Id bằng Email
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email); // Tham số đầu tiên là email
+            ps.setString(2, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Users user = new Users();
+                    user.setId(rs.getString("Id"));
+                    user.setPassword(rs.getString("Password")); // Vẫn lấy password để so khớp, nhưng không lưu vào session
+                    user.setFullname(rs.getString("Fullname"));
+                    user.setEmail(rs.getString("Email"));
+                    user.setRole(rs.getInt("Role"));
+                    user.setPoints(rs.getInt("Points"));
+                    return user;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
