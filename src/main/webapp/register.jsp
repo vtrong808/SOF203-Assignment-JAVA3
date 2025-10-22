@@ -17,10 +17,12 @@
 
     <!-- Nút Đăng ký / Đăng nhập bằng Google -->
     <div id="g_id_onload"
-         data-client_id="310151028929-j3jo2igob50v5qsi8kp9p0v2i920v3fm.apps.googleusercontent.com"
-         data-callback="handleCredentialResponse">
-    </div>
-    <div class="g_id_signin" data-type="standard"></div>
+             data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+             data-callback="handleCredentialResponse">
+        </div>
+        <div class="google-signin-container">
+            <div class="g_id_signin" data-type="standard"></div>
+        </div>
 
     <script>
         function handleCredentialResponse(response) {

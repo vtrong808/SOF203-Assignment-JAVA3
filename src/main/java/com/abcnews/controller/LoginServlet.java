@@ -20,24 +20,19 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lấy email thay vì id
-        String email = req.getParameter("email"); // << THAY ĐỔI Ở ĐÂY
+        String identifier = req.getParameter("identifier"); // Lấy tham số mới
         String password = req.getParameter("password");
 
         UsersDAO dao = new UsersDAO();
-        // Gọi phương thức mới findUserByEmailAndPassword
-        Users user = dao.findUserByEmailAndPassword(email, password); // << THAY ĐỔI Ở ĐÂY
+        // Gọi phương thức mới
+        Users user = dao.findUserByIdOrEmailAndPassword(identifier, password);
 
         if (user != null) { // Đăng nhập thành công
             HttpSession session = req.getSession();
-            // Lưu ý: Không nên lưu password vào session vì lý do bảo mật
-            // Đối tượng user trả về từ DAO đã không bao gồm password (nếu bạn sửa DAO)
-            // Hoặc bạn có thể set password thành null trước khi lưu vào session:
-            // user.setPassword(null);
             session.setAttribute("user", user);
             resp.sendRedirect(req.getContextPath() + "/home");
         } else { // Đăng nhập thất bại
-            req.setAttribute("error", "Sai email hoặc mật khẩu!"); // Cập nhật thông báo lỗi
+            req.setAttribute("error", "Sai Tên đăng nhập/Email hoặc Mật khẩu!");
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }
     }

@@ -1,14 +1,18 @@
+/* =================================
+   ENHANCED CSS FOR AUTH PAGES (LOGIN/REGISTER)
+   ================================= */
+
 .auth-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100vh; /* Đảm bảo form luôn căn giữa màn hình */
     padding: 2rem;
 }
 
 .auth-form {
     background-color: var(--surface-color);
-    padding: 2.5rem;
+    padding: 2.5rem 3rem; /* Tăng padding */
     border-radius: 8px;
     box-shadow: var(--box-shadow);
     width: 100%;
@@ -20,6 +24,7 @@
     text-align: center;
     color: var(--primary-color);
     margin-bottom: 2rem;
+    font-weight: 700; /* Làm tiêu đề đậm hơn */
 }
 
 .form-group {
@@ -28,8 +33,9 @@
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem; /* Tăng khoảng cách */
     color: var(--secondary-text-color);
+    font-weight: 500;
 }
 
 .form-group input {
@@ -40,6 +46,14 @@
     border-radius: 5px;
     color: var(--text-color);
     font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hiệu ứng khi focus */
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.2);
 }
 
 .form-button {
@@ -53,22 +67,59 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 1rem; /* Thêm khoảng cách trên nút */
 }
 
 .form-button:hover {
     background-color: #ff9eb2;
 }
 
+/* --- Tách biệt Nút Google --- */
+.google-signin-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 2rem 0; /* Tăng khoảng cách */
+    color: var(--secondary-text-color);
+}
+
+.google-signin-separator::before,
+.google-signin-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.google-signin-separator:not(:empty)::before {
+    margin-right: .5em;
+}
+
+.google-signin-separator:not(:empty)::after {
+    margin-left: .5em;
+}
+
+/* Căn giữa nút Google (Cần bao bọc nút Google bằng 1 div) */
+.google-signin-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem; /* Khoảng cách dưới nút Google */
+}
+
 .auth-switch {
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: 2rem; /* Tăng khoảng cách */
+    color: var(--secondary-text-color);
+}
+
+.auth-switch a {
+    font-weight: 500;
 }
 
 .error-message {
-    color: #ff6b6b;
-    background-color: rgba(255, 107, 107, 0.1);
-    border: 1px solid #ff6b6b;
-    padding: 10px;
+    color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+    border: 1px solid #e74c3c;
+    padding: 10px 15px;
     border-radius: 5px;
     text-align: center;
     margin-bottom: 1.5rem;

@@ -16,12 +16,28 @@
 </head>
 <body>
 
+    <!-- Biểu mẫu đăng nhập truyền thống -->
+    <form action="${pageContext.request.contextPath}/login" method="POST">
+        <div class="form-group">
+            <label for="identifier">Tên đăng nhập hoặc Email</label>
+            <input type="text" id="identifier" name="identifier" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Mật khẩu</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="form-button">Đăng nhập</button>
+    </form>
+    <div class="google-signin-separator">hoặc</div>
+
     <!-- Nút đăng nhập Google -->
     <div id="g_id_onload"
-         data-client_id="310151028929-j3jo2igob50v5qsi8kp9p0v2i920v3fm.apps.googleusercontent.com"
-         data-callback="handleCredentialResponse">
-    </div>
-    <div class="g_id_signin" data-type="standard"></div>
+             data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+             data-callback="handleCredentialResponse">
+        </div>
+        <div class="google-signin-container">
+            <div class="g_id_signin" data-type="standard"></div>
+        </div>
 
     <script>
         function handleCredentialResponse(response) {
@@ -32,7 +48,7 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: 'idToken=' + response.credential
+                body: 'idToken=' + encodeURIComponent(response.credential)
             }).then(res => {
                 if (res.ok) {
                     // Đăng nhập hoặc đăng ký thành công → chuyển hướng về trang chủ

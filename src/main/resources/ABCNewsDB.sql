@@ -260,6 +260,15 @@ INSERT INTO REWARDS (Id, [Name], PointsRequired, Image) VALUES
 ('VOUCHER_100K', N'Voucher mua sắm 100.000đ', 1000, 'images/rewards/voucher_100k.png');
 GO
 
+-- 1️⃣ Cập nhật Role cho tài khoản có tên 'Trọng Văn' thành 2
+UPDATE USERS
+SET Role = 2
+WHERE Fullname = N'Trọng Văn';
+
+-- 2️⃣ Cập nhật Role cho tài khoản có tên '8th November' thành 1
+UPDATE USERS
+SET Role = 1
+WHERE Fullname = N'8th November';
 
 
 
