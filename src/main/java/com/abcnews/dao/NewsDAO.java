@@ -290,4 +290,19 @@ public class NewsDAO {
         }
         return newsList;
     }
+
+    /**
+     * Tăng số lượt xem (ViewCount) của một bài viết lên 1.
+     * @param newsId ID của bài viết cần tăng lượt xem.
+     */
+    public void incrementViewCount(String newsId) {
+        String sql = "UPDATE NEWS SET ViewCount = ViewCount + 1 WHERE Id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newsId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(); // Ghi log lỗi nếu cần thiết
+        }
+    }
 }

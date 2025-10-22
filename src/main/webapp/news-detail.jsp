@@ -21,6 +21,7 @@
                 <div class="news-meta">
                     <span><i class="fa-solid fa-user-pen"></i> Tác giả: ${news.author}</span>
                     <span><i class="fa-solid fa-calendar-days"></i> Ngày đăng: <fmt:formatDate value="${news.postedDate}" pattern="dd/MM/yyyy HH:mm"/></span>
+                    <span><i class="fa-solid fa-eye"></i> Lượt xem: <fmt:formatNumber value="${news.viewCount}" groupingUsed="true"/></span>
                 </div>
 
                 <%-- Hiển thị hộp tích điểm nếu là độc giả/phóng viên --%>

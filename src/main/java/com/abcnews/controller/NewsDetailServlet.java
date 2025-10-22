@@ -16,6 +16,11 @@ public class NewsDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         NewsDAO dao = new NewsDAO();
+
+        if (id != null && !id.isEmpty()) {
+            dao.incrementViewCount(id); // Tăng lượt xem trước khi lấy dữ liệu
+        }
+
         News news = dao.findById(id);
 
         req.setAttribute("news", news);
