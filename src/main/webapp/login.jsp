@@ -7,33 +7,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Đăng nhập - ABC News</title>
+
+    <!-- Google Sign-In Integration -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pages/auth.css">
 </head>
 <body>
-<div class="auth-container">
-    <div class="auth-form">
-        <h1>Đăng nhập</h1>
 
-        <c:if test="${not empty error}">
-            <p class="error-message">${error}</p>
-        </c:if>
-
-        <form action="${pageContext.request.contextPath}/login" method="POST">
-            <div class="form-group">
-                            <%-- Thay đổi label --%>
-                            <label for="email">Email</label>
-                            <%-- Thay đổi id và name thành "email" --%>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-            <div class="form-group">
-                            <label for="password">Mật khẩu</label>
-                            <input type="password" id="password" name="password" required>
-                        </div>
-            <button type="submit" class="form-button">Đăng nhập</button>
-        </form>
-        <p class="auth-switch">Chưa có tài khoản? <a href="${pageContext.request.contextPath}/register">Đăng ký ngay</a></p>
+    <!-- Nút đăng nhập Google -->
+    <div id="g_id_onload"
+         data-client_id="310151028929-j3jo2igob50v5qsi8kp9p0v2i920v3fm.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
     </div>
-</div>
+    <div class="g_id_signin" data-type="standard"></div>
+
+    <script>
+        function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+            // Gửi ID Token lên backend để xác thực
+            fetch('${pageContext.request.contextPath}/google-auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'idToken=' + response.credential
+            }).then(res => {
+                if (res.ok) {
+                    // Đăng nhập hoặc đăng ký thành công → chuyển hướng về trang chủ
+                    window.location.href = '${pageContext.request.contextPath}/home';
+                } else {
+                    alert('Đăng nhập bằng Google thất bại!');
+                }
+            }).catch(err => {
+                console.error('Lỗi khi gửi yêu cầu Google Auth:', err);
+                alert('Không thể kết nối máy chủ. Vui lòng thử lại!');
+            });
+        }
+    </script>
+
 </body>
 </html>
