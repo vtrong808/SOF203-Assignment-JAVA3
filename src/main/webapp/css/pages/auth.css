@@ -6,13 +6,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Đảm bảo form luôn căn giữa màn hình */
+    min-height: 100vh;
     padding: 2rem;
 }
 
 .auth-form {
     background-color: var(--surface-color);
-    padding: 2.5rem 3rem; /* Tăng padding */
+    padding: 2.5rem 3rem;
     border-radius: 8px;
     box-shadow: var(--box-shadow);
     width: 100%;
@@ -24,21 +24,22 @@
     text-align: center;
     color: var(--primary-color);
     margin-bottom: 2rem;
-    font-weight: 700; /* Làm tiêu đề đậm hơn */
+    font-weight: 700;
 }
 
-.form-group {
+/* --- Form đăng nhập/đăng ký thường --- */
+.traditional-auth-form .form-group { /* Thêm class bao bọc form thường */
     margin-bottom: 1.5rem;
 }
 
-.form-group label {
+.traditional-auth-form label {
     display: block;
-    margin-bottom: 0.75rem; /* Tăng khoảng cách */
+    margin-bottom: 0.75rem;
     color: var(--secondary-text-color);
     font-weight: 500;
 }
 
-.form-group input {
+.traditional-auth-form input {
     width: 100%;
     padding: 12px;
     background-color: var(--background-color);
@@ -49,8 +50,7 @@
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hiệu ứng khi focus */
-.form-group input:focus {
+.traditional-auth-form input:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.2);
@@ -67,19 +67,19 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 1rem; /* Thêm khoảng cách trên nút */
+    margin-top: 1rem;
 }
 
 .form-button:hover {
     background-color: #ff9eb2;
 }
 
-/* --- Tách biệt Nút Google --- */
+/* --- Bộ phân tách và Nút Google --- */
 .google-signin-separator {
     display: flex;
     align-items: center;
     text-align: center;
-    margin: 2rem 0; /* Tăng khoảng cách */
+    margin: 2rem 0; /* Khoảng cách trên dưới */
     color: var(--secondary-text-color);
 }
 
@@ -98,16 +98,17 @@
     margin-left: .5em;
 }
 
-/* Căn giữa nút Google (Cần bao bọc nút Google bằng 1 div) */
+/* Căn giữa nút Google */
 .google-signin-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 1.5rem; /* Khoảng cách dưới nút Google */
+    margin-bottom: 1.5rem;
 }
 
+/* --- Link chuyển đổi Đăng nhập/Đăng ký --- */
 .auth-switch {
     text-align: center;
-    margin-top: 2rem; /* Tăng khoảng cách */
+    margin-top: 2rem;
     color: var(--secondary-text-color);
 }
 
@@ -115,6 +116,7 @@
     font-weight: 500;
 }
 
+/* --- Thông báo lỗi --- */
 .error-message {
     color: #e74c3c;
     background-color: rgba(231, 76, 60, 0.1);
