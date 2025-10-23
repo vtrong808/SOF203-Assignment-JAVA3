@@ -4,14 +4,18 @@ import com.abcnews.dao.NewsDAO;
 import com.abcnews.model.News;
 import com.abcnews.model.Users;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig; // <-- THÊM IMPORT
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part; // <-- THÊM IMPORT
 
+import java.io.File; // <-- THÊM IMPORT
 import java.io.IOException;
 
 @WebServlet("/reporter/edit-news")
+@MultipartConfig // <-- THÊM ANNOTATION
 public class EditNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,9 +36,29 @@ public class EditNewsServlet extends HttpServlet {
         news.setId(req.getParameter("id"));
         news.setTitle(req.getParameter("title"));
         news.setContent(req.getParameter("content"));
-        news.setImage(req.getParameter("image"));
         news.setCategoryId(req.getParameter("categoryId"));
-        news.setAuthor(reporter.getId()); // Gán tác giả để xác thực
+        news.setAuthor(reporter.getId()); // Gán tác giả để xác thực quyền
+
+        // --- XỬ LÝ UPLOAD HÌNH ẢNH KHI SỬA ---
+        Part filePart = req.getPart("imageFile");
+        String fileName = filePart.getSubmittedFileName();
+
+        if (fileName != null && !fileName.isEmpty()) {
+            // Người dùng đã chọn file mới
+            String uploadPath = getServletContext().getRealPath("") + "images" + File.separator + "news";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            filePart.write(uploadPath + File.separator + fileName);
+
+            String dbPath = "images/news/" + fileName;
+            news.setImage(dbPath); // Cập nhật ảnh mới
+        } else {
+            // Người dùng không chọn file mới, giữ nguyên ảnh cũ
+            news.setImage(req.getParameter("existingImage"));
+        }
+        // ------------------------------------
 
         NewsDAO newsDAO = new NewsDAO();
         newsDAO.updateNews(news);

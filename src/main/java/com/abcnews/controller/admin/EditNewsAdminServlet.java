@@ -3,13 +3,18 @@ package com.abcnews.controller.admin;
 import com.abcnews.dao.NewsDAO;
 import com.abcnews.model.News;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig; // <-- THÊM IMPORT
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part; // <-- THÊM IMPORT
+
+import java.io.File; // <-- THÊM IMPORT
 import java.io.IOException;
 
 @WebServlet("/admin/edit-news")
+@MultipartConfig // <-- THÊM ANNOTATION
 public class EditNewsAdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -18,8 +23,7 @@ public class EditNewsAdminServlet extends HttpServlet {
         News news = newsDAO.findById(id);
 
         req.setAttribute("news", news);
-        req.setAttribute("formAction", "/admin/edit-news"); // Action trỏ về servlet admin
-        // Tái sử dụng form của phóng viên
+        req.setAttribute("formAction", "/admin/edit-news");
         req.getRequestDispatcher("/reporter/news-form.jsp").forward(req, resp);
     }
 
@@ -29,13 +33,32 @@ public class EditNewsAdminServlet extends HttpServlet {
         news.setId(req.getParameter("id"));
         news.setTitle(req.getParameter("title"));
         news.setContent(req.getParameter("content"));
-        news.setImage(req.getParameter("image"));
         news.setCategoryId(req.getParameter("categoryId"));
-        // Admin có thể bật/tắt hiển thị trang chủ (nếu bạn muốn thêm chức năng này vào form)
-        // news.setHome(Boolean.parseBoolean(req.getParameter("home")));
+        // Admin không cần set author
+
+        // --- XỬ LÝ UPLOAD HÌNH ẢNH KHI SỬA ---
+        Part filePart = req.getPart("imageFile");
+        String fileName = filePart.getSubmittedFileName();
+
+        if (fileName != null && !fileName.isEmpty()) {
+            // Người dùng đã chọn file mới
+            String uploadPath = getServletContext().getRealPath("") + "images" + File.separator + "news";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            filePart.write(uploadPath + File.separator + fileName);
+
+            String dbPath = "images/news/" + fileName;
+            news.setImage(dbPath); // Cập nhật ảnh mới
+        } else {
+            // Người dùng không chọn file mới, giữ nguyên ảnh cũ
+            news.setImage(req.getParameter("existingImage"));
+        }
+        // ------------------------------------
 
         NewsDAO newsDAO = new NewsDAO();
-        newsDAO.updateNewsByAdmin(news);
+        newsDAO.updateNewsByAdmin(news); // Gọi hàm update của Admin
 
         resp.sendRedirect(req.getContextPath() + "/admin/manage-news");
     }

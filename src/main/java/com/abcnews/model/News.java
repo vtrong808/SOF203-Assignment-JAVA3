@@ -11,7 +11,8 @@ public class News {
     private String author;
     private int viewCount;
     private String categoryId;
-    private boolean home; // Trang nhất
+    private boolean home;
+    private boolean isApproved;// Trang nhất
 
     // Constructors
     public News() {
@@ -101,4 +102,8 @@ public class News {
     public void setHome(boolean home) {
         this.home = home;
     }
+
+    public boolean isApproved() {return isApproved;}
+
+    public void setApproved(boolean approved) {isApproved = approved;}
 }

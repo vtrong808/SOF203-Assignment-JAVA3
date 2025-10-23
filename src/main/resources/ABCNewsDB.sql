@@ -271,4 +271,45 @@ SET Role = 1
 WHERE Fullname = N'8th November';
 
 
+USE ABCNewsDB;
+GO
+
+-- Thêm cột Home nếu chưa có
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.columns 
+    WHERE Name = N'Home'
+      AND Object_ID = Object_ID(N'dbo.NEWS')
+)
+BEGIN
+    ALTER TABLE dbo.NEWS 
+    ADD Home BIT DEFAULT 0 WITH VALUES;
+END
+GO
+
+-- Thêm cột IsApproved nếu chưa có
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.columns 
+    WHERE Name = N'IsApproved'
+      AND Object_ID = Object_ID(N'dbo.NEWS')
+)
+BEGIN
+    ALTER TABLE dbo.NEWS 
+    ADD IsApproved BIT DEFAULT 0 NOT NULL;
+END
+GO
+
+-- Gán giá trị mặc định 0 cho dữ liệu cũ
+UPDATE dbo.NEWS 
+SET IsApproved = 0 
+WHERE IsApproved IS NULL;
+GO
+
+-- Cập nhật dữ liệu: nếu IsApproved vẫn NULL thì gán = 1
+UPDATE dbo.NEWS 
+SET IsApproved = 1 
+WHERE IsApproved IS NULL;
+GO
+
 

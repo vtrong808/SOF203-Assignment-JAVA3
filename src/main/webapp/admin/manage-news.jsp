@@ -22,31 +22,43 @@
     </form>
 
     <table class="management-table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tiêu đề</th>
-            <th>Tác giả</th>
-            <th>Ngày đăng</th>
-            <th>Hành động</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="news" items="${newsList}">
+            <thead>
             <tr>
-                <td>${news.id}</td>
-                <td>${news.title}</td>
-                <%-- Giữ nguyên cách hiển thị tên tác giả, không cần link --%>
-                <td>${userMap[news.author]}</td>
-                <td><fmt:formatDate value="${news.postedDate}" pattern="dd-MM-yyyy HH:mm"/></td>
-                <td>
-                    <a href="${pageContext.request.contextPath}/admin/edit-news?id=${news.id}" class="btn-action btn-edit">Sửa</a>
-                    <a href="${pageContext.request.contextPath}/admin/delete-news?id=${news.id}" class="btn-action btn-delete" onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">Xóa</a>
-                </td>
+                <th>ID</th>
+                <th>Tiêu đề</th>
+                <th>Tác giả</th>
+                <th>Trạng thái</th> <%-- THÊM CỘT NÀY --%>
+                <th>Hành động</th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <c:forEach var="news" items="${newsList}">
+                <tr>
+                    <td>${news.id}</td>
+                    <td>${news.title}</td>
+                    <td>${userMap[news.author]}</td>
+                    <%-- THÊM CỘT NÀY --%>
+                    <td>
+                        <c:if test="${news.approved}">
+                            <span style="color: #2ecc71;">Đã duyệt</span>
+                        </c:if>
+                        <c:if test="${not news.approved}">
+                            <span style="color: #f39c12;">Chờ duyệt</span>
+                        </c:if>
+                    </td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/admin/edit-news?id=${news.id}" class="btn-action btn-edit">Sửa</a>
+                        <a href="${pageContext.request.contextPath}/admin/delete-news?id=${news.id}" class="btn-action btn-delete" onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">Xóa</a>
+
+                        <%-- THÊM NÚT DUYỆT BÀI --%>
+                        <c:if test="${not news.approved}">
+                             <a href="${pageContext.request.contextPath}/admin/approve-news?id=${news.id}" class="btn-action" style="background-color: #2ecc71;">Duyệt</a>
+                        </c:if>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
 </div>
 
 <%-- Thêm CSS cho thanh lọc --%>

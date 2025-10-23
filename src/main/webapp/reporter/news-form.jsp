@@ -8,7 +8,9 @@
 <div class="container">
     <h1 class="page-title">${not empty news ? 'Chỉnh sửa' : 'Tạo mới'} Bài viết</h1>
 
-    <form action="${pageContext.request.contextPath}${requestScope.formAction}" method="post" class="management-form">
+    <%-- THAY ĐỔI QUAN TRỌNG: Thêm enctype="multipart/form-data" để form có thể gửi file --%>
+    <form action="${pageContext.request.contextPath}${requestScope.formAction}" method="post" class="management-form" enctype="multipart/form-data">
+
         <%-- Input ẩn chứa ID khi chỉnh sửa --%>
         <c:if test="${not empty news}">
             <input type="hidden" name="id" value="${news.id}">
@@ -22,24 +24,50 @@
             <label for="content">Nội dung</label>
             <textarea id="content" name="content" rows="10" required>${news.content}</textarea>
         </div>
+
+        <%-- THAY ĐỔI Ô NHẬP ẢNH --%>
         <div class="form-group">
-            <label for="image">URL Hình ảnh (ví dụ: images/ten-anh.jpg)</label>
-            <input type="text" id="image" name="image" value="${news.image}">
+            <label>Hình ảnh bài viết</label>
+            <div class="file-upload-wrapper">
+                <input type="file" id="imageFile" name="imageFile" accept="image/*" class="file-input-hidden">
+                <label for="imageFile" class="file-input-label btn">
+                    <i class="fa-solid fa-upload"></i> Chọn tệp...
+                </label>
+                <span class="file-name-display">
+                    <c:choose>
+                        <c:when test="${not empty news.image}">${news.image}</c:when>
+                        <c:otherwise>Chưa có tệp nào được chọn</c:otherwise>
+                    </c:choose>
+                </span>
+            </div>
+            <%-- Input ẩn để lưu ảnh cũ trong trường hợp Sửa mà không chọn ảnh mới --%>
+            <c:if test="${not empty news}">
+                 <input type="hidden" name="existingImage" value="${news.image}">
+            </c:if>
         </div>
+
         <div class="form-group">
             <label for="categoryId">Danh mục</label>
             <select name="categoryId" id="categoryId">
-                <option value="TG" ${news.categoryId == 'TG' ? 'selected' : ''}>Thế giới</option>
-                <option value="CN" ${news.categoryId == 'CN' ? 'selected' : ''}>Công nghệ</option>
-                <option value="TT" ${news.categoryId == 'TT' ? 'selected' : ''}>Thể thao</option>
-                <option value="GT" ${news.categoryId == 'GT' ? 'selected' : ''}>Giải trí</option>
-                <option value="PL" ${news.categoryId == 'PL' ? 'selected' : ''}>Pháp luật</option>
+                <c:forEach var="cat" items="${applicationScope.appCategories}">
+                    <option value="${cat.id}" ${news.categoryId == cat.id ? 'selected' : ''}>
+                        ${cat.name}
+                    </option>
+                </c:forEach>
             </select>
         </div>
 
         <button type="submit" class="btn btn-primary">Lưu bài viết</button>
-        <a href="${pageContext.request.contextPath}/reporter/manage-news" class="btn">Hủy</a>
+        <a href="${pageContext.request.contextPath}${sessionScope.user.role == 1 ? '/reporter/manage-news' : '/admin/manage-news'}" class="btn">Hủy</a>
     </form>
 </div>
+
+<%-- Thêm JavaScript để hiển thị tên file đã chọn --%>
+<script>
+    document.getElementById('imageFile').addEventListener('change', function(e) {
+        var fileName = e.target.files[0] ? e.target.files[0].name : 'Chưa có tệp nào được chọn';
+        document.querySelector('.file-name-display').textContent = fileName;
+    });
+</script>
 
 <jsp:include page="/layout/footer.jsp"/>

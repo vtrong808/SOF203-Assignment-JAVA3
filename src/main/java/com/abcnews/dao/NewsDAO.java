@@ -33,12 +33,13 @@ public class NewsDAO {
         news.setViewCount(rs.getInt("ViewCount"));
         news.setCategoryId(rs.getString("CategoryId"));
         news.setHome(rs.getBoolean("Home"));
+        news.setApproved(rs.getBoolean("IsApproved"));
         return news;
     }
 
     public List<News> getAllNews() {
         List<News> newsList = new ArrayList<>();
-        String sql = "SELECT * FROM NEWS";
+        String sql = "SELECT * FROM NEWS WHERE IsApproved = 1";
 
         // Sử dụng try-with-resources để đảm bảo tài nguyên được đóng tự động
         try (Connection conn = DBContext.getConnection();
@@ -58,7 +59,7 @@ public class NewsDAO {
     public List<News> getHomepageNews() {
         List<News> newsList = new ArrayList<>();
         // Chỉ lấy các bản tin có thuộc tính Home = 1
-        String sql = "SELECT * FROM NEWS WHERE Home = 1 ORDER BY PostedDate DESC";
+        String sql = "SELECT * FROM NEWS WHERE Home = 1 AND IsApproved = 1 ORDER BY PostedDate DESC";
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -76,7 +77,7 @@ public class NewsDAO {
     // Lấy ra một danh sách tin tức mới nhất, giới hạn số lượng
     public List<News> getLatestNews(int limit) {
         List<News> newsList = new ArrayList<>();
-        String sql = "SELECT TOP (?) * FROM NEWS ORDER BY PostedDate DESC";
+        String sql = "SELECT TOP (?) * FROM NEWS WHERE IsApproved = 1 ORDER BY PostedDate DESC";
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -96,7 +97,7 @@ public class NewsDAO {
     // Lấy ra danh sách tin tức được xem nhiều nhất, giới hạn số lượng
     public List<News> getMostViewedNews(int limit) {
         List<News> newsList = new ArrayList<>();
-        String sql = "SELECT TOP (?) * FROM NEWS ORDER BY ViewCount DESC";
+        String sql = "SELECT TOP (?) * FROM NEWS WHERE IsApproved = 1 ORDER BY ViewCount DESC";
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -116,7 +117,7 @@ public class NewsDAO {
     // Lấy tin tức theo CategoryId, giới hạn số lượng
     public List<News> getNewsByCategoryId(String categoryId, int limit) {
         List<News> newsList = new ArrayList<>();
-        String sql = "SELECT TOP (?) * FROM NEWS WHERE CategoryId = ? ORDER BY PostedDate DESC";
+        String sql = "SELECT TOP (?) * FROM NEWS WHERE CategoryId = ? AND IsApproved = 1 ORDER BY PostedDate DESC";
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -135,7 +136,7 @@ public class NewsDAO {
     }
 
     public News findById(String id) {
-        String sql = "SELECT * FROM NEWS WHERE Id = ?";
+        String sql = "SELECT * FROM NEWS WHERE Id = ? AND IsApproved = 1";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, id);
@@ -155,7 +156,7 @@ public class NewsDAO {
      * @param news Đối tượng News chứa thông tin cần thêm.
      */
     public void insertNews(News news) {
-        String sql = "INSERT INTO NEWS (Id, Title, Content, Image, Author, CategoryId, Home) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO NEWS (Id, Title, Content, Image, Author, CategoryId, Home, IsApproved) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, news.getId());
@@ -165,6 +166,7 @@ public class NewsDAO {
             ps.setString(5, news.getAuthor());
             ps.setString(6, news.getCategoryId());
             ps.setBoolean(7, news.isHome());
+            ps.setBoolean(8, news.isApproved());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -304,5 +306,48 @@ public class NewsDAO {
         } catch (Exception e) {
             e.printStackTrace(); // Ghi log lỗi nếu cần thiết
         }
+    }
+
+    public List<News> getAllNewsByAuthor(String authorId) {
+        List<News> newsList = new ArrayList<>();
+        String sql = "SELECT * FROM NEWS WHERE Author = ? ORDER BY PostedDate DESC";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, authorId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    newsList.add(mapResultSetToNews(rs));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newsList;
+    }
+
+    public void approveNews(String newsId) {
+        String sql = "UPDATE NEWS SET IsApproved = 1 WHERE Id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newsId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<News> getAllNewsForAdmin() {
+        List<News> newsList = new ArrayList<>();
+        String sql = "SELECT * FROM NEWS ORDER BY PostedDate DESC"; // Lấy tất cả
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                newsList.add(mapResultSetToNews(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newsList;
     }
 }

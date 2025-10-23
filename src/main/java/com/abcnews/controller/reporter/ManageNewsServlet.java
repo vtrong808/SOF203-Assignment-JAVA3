@@ -24,9 +24,7 @@ public class ManageNewsServlet extends HttpServlet {
         NewsDAO newsDAO = new NewsDAO();
         // Lấy tất cả tin tức và lọc ra những tin của phóng viên này
         List<News> allNews = newsDAO.getAllNews();
-        List<News> reporterNews = allNews.stream()
-                .filter(news -> news.getAuthor().equals(reporter.getId()))
-                .collect(Collectors.toList());
+        List<News> reporterNews = newsDAO.getAllNewsByAuthor(reporter.getId());
 
         req.setAttribute("newsList", reporterNews);
         req.getRequestDispatcher("/reporter/manage-news.jsp").forward(req, resp);

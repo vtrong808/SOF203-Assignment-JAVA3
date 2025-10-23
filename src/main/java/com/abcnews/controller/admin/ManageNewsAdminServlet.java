@@ -23,7 +23,7 @@ public class ManageNewsAdminServlet extends HttpServlet {
         NewsDAO newsDAO = new NewsDAO();
         UsersDAO usersDAO = new UsersDAO();
 
-        List<News> allNews = newsDAO.getAllNews();
+        List<News> allNews = newsDAO.getAllNewsForAdmin();
 
         // Lấy danh sách phóng viên để đổ vào dropdown
         List<Users> reporters = usersDAO.getAllReporters();
